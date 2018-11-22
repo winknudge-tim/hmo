@@ -8,7 +8,8 @@ import _ from 'lodash'
 import React, { Component } from 'react';
 import {
   View,
-  TouchableOpacity
+  TouchableOpacity,
+  Alert
 } from 'react-native';
 
 import { Spinner, Container, Header, Content, Form, Thumbnail, Left, Body, Right, Button, Icon, Title, Text } from 'native-base';
@@ -55,6 +56,8 @@ class UserDetailsScene extends Component<{}> {
     FormDataHelper.createDataField(formData, 'password', INPUT_TYPES.PASSWORD, this.props.Lang.userDetails.password + '*', null, null, true)
 
     this.state = {
+      chosenImage: null,
+      mimeType: null,
       formData: formData,
       formInvalid: !FormDataHelper.isFormValid(formData)
     };
@@ -113,10 +116,28 @@ class UserDetailsScene extends Component<{}> {
       width: 400,
       height: 400,
       cropping: true,
-      mediaType: 'photo',
-      includeBase64: true
+      compressImageQuality: 0.8,
+      includeBase64: true,
+      mediaType: 'photo'
     }).then(image => {
-      console.log(image);
+      
+      if (image && image.data) {
+        console.log(image)
+        this.setState({
+          chosenImage: image.data,
+          mimeType: image.mime
+        })
+      } else {
+        Alert.alert(
+          'No image found',
+          'No image was imported!',
+          [
+            {text: 'OK', onPress: () => console.log('OK Pressed')},
+          ],
+          { cancelable: false }
+        )
+      }
+      
     });
     // var options = {
     //     title: 'Select image',
@@ -173,11 +194,16 @@ class UserDetailsScene extends Component<{}> {
 
   doRender () {
 
-    var formData = this.state.formData
+    var { chosenImage, mimeType, formData } = this.state
 //PRIMARY_BUTTON_DISABLED
     if (this.props.registrationReducer.showSpinner) {
       return (<Spinner />)
     } else {
+
+      var imgSrc = AVATAR_PLACEHOLDER 
+      if (chosenImage) {
+        imgSrc = { uri: `data:${mimeType};base64,${chosenImage}` }
+      }
 
       return (
 
@@ -188,7 +214,7 @@ class UserDetailsScene extends Component<{}> {
                 alignItems: 'center'
               }}>
                 <TouchableOpacity onPress={this.chooseAnImage}>
-                  <Thumbnail large source={AVATAR_PLACEHOLDER} />
+                  <Thumbnail large source={imgSrc} />
                 </TouchableOpacity>
                 <Text>Add a profile picutre</Text>
               </View>
