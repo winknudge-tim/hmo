@@ -54,7 +54,10 @@ class UserDetailsScene extends Component<{}> {
     var formData = {}
     FormDataHelper.createDataField(formData, 'userName', INPUT_TYPES.TEXT, this.props.Lang.userDetails.userName + '*', null, null, true)
     FormDataHelper.createDataField(formData, 'password', INPUT_TYPES.PASSWORD, this.props.Lang.userDetails.password + '*', null, null, true)
+    FormDataHelper.createDataField(formData, 'profileImage', INPUT_TYPES.PASSWORD, this.props.Lang.userDetails.password + '*', null, null, true)
+    FormDataHelper.createDataField(formData, 'mimeType', INPUT_TYPES.PASSWORD, this.props.Lang.userDetails.password, null, null)
 
+     
     this.state = {
       chosenImage: null,
       mimeType: null,
@@ -122,11 +125,16 @@ class UserDetailsScene extends Component<{}> {
     }).then(image => {
       
       if (image && image.data) {
-        console.log(image)
+        
+        this.state.formData.profileImage.value = image.data
+        this.state.formData.mimeType.value = image.mime
+        var formInvalid = !FormDataHelper.isFormValid(this.state.formData)
+
         this.setState({
-          chosenImage: image.data,
-          mimeType: image.mime
-        })
+          formData: this.state.formData,
+          formInvalid: formInvalid
+         })
+
       } else {
         Alert.alert(
           'No image found',
@@ -139,41 +147,7 @@ class UserDetailsScene extends Component<{}> {
       }
       
     });
-    // var options = {
-    //     title: 'Select image',
-    //     customButtons: [],
-    //     storageOptions: {
-    //       skipBackup: true,
-    //       path: 'images'
-    //     }
-    //   };
-      
   
-    //   ImagePicker.showImagePicker(options, (response) => {
-      
-    //     if (response.didCancel) {
-    //       console.log('User cancelled image picker');
-    //     }
-    //     else if (response.error) {
-    //       console.log('ImagePicker Error: ', response.error);
-    //     }
-    //     else {
-  
-    //       let source = {
-    //         uri: response.uri,
-    //         data: response.data,
-    //         height: response.height,
-    //         width: response.width
-    //       }
-      
-    //       // You can also display the image using data:
-    //       // let source = { uri: 'data:image/jpeg;base64,' + response.data };
-  
-    //       this.setState({
-    //         selectedImage: source
-    //       });
-    //     }
-    //   });
 
   }
 
@@ -194,16 +168,17 @@ class UserDetailsScene extends Component<{}> {
 
   doRender () {
 
-    var { chosenImage, mimeType, formData } = this.state
+    var { formData } = this.state
 //PRIMARY_BUTTON_DISABLED
     if (this.props.registrationReducer.showSpinner) {
       return (<Spinner />)
     } else {
 
       var imgSrc = AVATAR_PLACEHOLDER 
-      if (chosenImage) {
-        imgSrc = { uri: `data:${mimeType};base64,${chosenImage}` }
+      if (formData.profileImage.value && formData.mimeType.value) {
+        imgSrc = { uri: `data:${formData.mimeType.value};base64,${formData.profileImage.value}` }
       }
+
 
       return (
 

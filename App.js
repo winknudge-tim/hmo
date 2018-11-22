@@ -66,7 +66,7 @@ const Scenes = Actions.create(
     <Stack  key='register' type={ActionConst.RESET} hideNavBar={true}>
       <Scene key="reigsterSteps" component={ RegisterSteps } Lang={Lang} />
       
-      <Scene initial key="userDetailsScene" component={ UserDetailsScene } Lang={Lang} />
+      <Scene key="userDetailsScene" component={ UserDetailsScene } Lang={Lang} />
       <Scene key="profilePictureScene" component={ ProfilePictureScene } Lang={Lang} />
       <Scene key="confirmProfile" component={ ConfirmProfile } Lang={Lang} />
       <Scene key="employmentScene" component={ EmploymentScene } Lang={Lang} />
