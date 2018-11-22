@@ -59,6 +59,24 @@ export const registrationReducer = (state = initialState, action) => {
   }
 }
 
+export const initialSubmitState = {
+  showSpinner: false,
+  error: null
+}
+
+export const submitRegReducer = (state = initialSubmitState, action) => {
+  switch (action.type) {  
+    case types.REGISTERING_USER:
+      return {...state, showSpinner: true, error: null}
+    case types.REGISTER_USER_SUCCESS:
+      return {...state, showSpinner: false}
+    case types.REGISTER_USER_ERROR:
+      return {...state, showSpinner: false, error: action.error}
+    default:
+      return state
+  }
+}
+
 function saveTempData (tempData, nextScreen) {
 
   return (dispatch) => {
@@ -137,7 +155,7 @@ function registerUser () {
       .then((res) => {
 
         console.log(res)
-        dispatch({ type: types.REGISTER_USER_SUCCESS })
+        dispatch({ type: types.REGISTER_USER_SUCCESS, payload: res })
         Actions.registrationCompleteScene()
 
       })
@@ -145,7 +163,7 @@ function registerUser () {
 
         console.log('ERROR')
         console.log(e)
-        dispatch({ type: types.REGISTER_USER_ERROR })
+        dispatch({ type: types.REGISTER_USER_ERROR, error: e })
 
       })
     //dispatch({ type: types.REGISTER_USER_SUCCESS })

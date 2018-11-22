@@ -71,7 +71,7 @@ class RegisterStepsScene extends Component<{}> {
   }
 
   doRegister = () => {
-    this.props.registerUser(this.props.registrationReducer.tempData)
+    //this.props.registerUser(tempData)
   }
 
   completedEnough = () => {
@@ -90,18 +90,20 @@ class RegisterStepsScene extends Component<{}> {
     })
 
     if (
-        (hasCompletedEnough && tempData.selectedPropertyId && !_.isNumber(tempData.selectedPropertyId)) ||
-        (hasCompletedEnough && tempData.selectedPropertyId && _.isNumber(tempData.selectedPropertyId) && tempData.selectedPropertyId < 1)
+        (tempData.selectedPropertyId && _.isNumber(tempData.selectedPropertyId) && tempData.selectedPropertyId < 0) ||
+        (tempData.selectedPropertyId && !_.isNumber(tempData.selectedPropertyId))
       ) {
         hasCompletedEnough = false
-    }
+      }
 
     return hasCompletedEnough
-    //
+    //selectedPropertyId
 
   }
 
   render () {
+
+    console.log('tempData', this.props.registrationReducer.tempData)
 
     var hasCompletedEnough = this.completedEnough()
 
@@ -160,8 +162,8 @@ class RegisterStepsScene extends Component<{}> {
             <List>
               <ListItem>
                 <Body>
-                  <Text style={{ fontSize: 16, fontWeight: 'bold', margin: 5 }}>To register please fill in each section. Fields marked with an * are required to initially register.</Text>
-                  <Text style={{ fontSize: 16, margin: 5 }}>Please note all sections will be required to sign a tenancy agreement.</Text>  
+                  <Text style={{ fontSize: 16, fontWeight: 'bold', margin: 10 }}>To register please fill in each section. Fields marked with an * are required to initially register.</Text>
+                  <Text style={{ fontSize: 16, margin: 10 }}>Please note all sections will be required to sign a tenancy agreement.</Text>  
                 </Body>
               </ListItem>
               {steps.map((step, index) => {
@@ -179,14 +181,11 @@ class RegisterStepsScene extends Component<{}> {
             </List>
           </Content>
           </View>
-          <View style={{ height: 80, margin: 10 }}>
-          {!hasCompletedEnough && <Button disabled={true} transparent block style={Styles.PRIMARY_BUTTON_DISABLED}>
-              <Text style={Styles.PRIMARY_BUTTON_TEXT}>{this.props.Lang.registrationPaymentScene.makePayment}</Text>
-          </Button>}
-          {hasCompletedEnough && <Button transparent block style={Styles.PRIMARY_BUTTON} onPress={this.doRegister}>
-              <Text style={Styles.PRIMARY_BUTTON_TEXT}>{this.props.Lang.registrationPaymentScene.makePayment}</Text>
-          </Button>}
-          </View>
+          {hasCompletedEnough && <View style={{ height: 80, margin: 10 }}>
+            <Button transparent block disabled={this.state.formInvalid} block style={Styles.PRIMARY_BUTTON} onPress={this.doRegister}>
+                <Text style={Styles.PRIMARY_BUTTON_TEXT}>{this.props.Lang.registrationPaymentScene.makePayment}</Text>
+            </Button>
+          </View>}
         </View>
       </Container>
       )
