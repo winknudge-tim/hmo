@@ -145,7 +145,7 @@ class PaymentPayment extends Component<{}> {
     tempData = _.defaults(tempData, this.props.registrationReducer.tempData)
     //registrationCompleteScene
 
-    this.props.saveTempData(tempData)
+    this.props.saveTempData(tempData, 'bck')
     //this.props.registerUser(tempData)
 
   }

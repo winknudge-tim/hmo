@@ -7,26 +7,33 @@
 import React, { Component } from 'react';
 import {
   StyleSheet,
-  View,
-  ScrollView,
-  Image,
-  Dimensions
+  View
 } from 'react-native';
 
 import { Container, Header, Content, Form, Item, Input, Label, Left, Body, Right, Button, Icon, Title, Text, List, ListItem } from 'native-base';
 //import getTheme from './native-base-theme/components';
 //import material from './native-base-theme/variables/material';
-import { Col, Row, Grid } from 'react-native-easy-grid';
 
-import { Actions } from 'react-native-router-flux';
+import _ from 'lodash'
 
 import Styles from '../../configs/styles'
 
-const { width, height } = Dimensions.get('window')
+import { Actions } from 'react-native-router-flux';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import { actions as registrationActions } from '../../reducers/registrationReducer'
 
-const uri = 'https://scontent.fman2-2.fna.fbcdn.net/v/t1.0-1/c90.210.540.540/s160x160/23172734_10159422756090063_79266100794685344_n.jpg?oh=e8fafd700e76752d9c5b041417827c14&oe=5AE63F0E'
 
-export default class RegisterStepsScene extends Component<{}> {
+function mapStateToProps (state) {
+  return state
+}
+
+const mapDispatchToProps = (dispatch) => ({
+  ...bindActionCreators(registrationActions, dispatch)
+})
+
+
+class RegisterStepsScene extends Component<{}> {
   
   constructor(props) {
     super(props);
@@ -35,15 +42,68 @@ export default class RegisterStepsScene extends Component<{}> {
     };
   }
 
+  componentDidMount () {
+    this.props.getTempData()
+  }
+
+  componentWillReceiveProps (nextProps) {
+
+    var tempData;
+
+    // if (nextProps.registrationReducer && nextProps.registrationReducer.tempData) {
+
+    //   tempData = nextProps.registrationReducer.tempData;
+
+    //   _.each(tempData, (value, id) => {
+
+    //     console.log(id, value)
+
+    //   })
+
+    
+
+    // }
+
+  }
+
   gotToStep = (scene) => {
     Actions[scene]()
   }
 
   doRegister = () => {
-    //this.props.registerUser(tempData)
+    this.props.registerUser(this.props.registrationReducer.tempData)
+  }
+
+  completedEnough = () => {
+
+    var { tempData } = this.props.registrationReducer
+    var fieldsMustComplete = ['cardNumber', 'expiryDate', 'nameOnCard', 'securityNumber', 'dob', 'email', 'firstName', 'lastName', 'userName', 'password', 'gender', 'phone', 'profileImage']
+
+    var hasCompletedEnough = true
+
+    _.each(fieldsMustComplete, function(id) {
+
+      if (_.isUndefined(tempData[id]) || _.isNull(tempData[id]) || !tempData[id] || tempData[id].length === 0 || tempData[id] === "") {
+        hasCompletedEnough = false
+      }
+
+    })
+
+    if (
+        (hasCompletedEnough && tempData.selectedPropertyId && !_.isNumber(tempData.selectedPropertyId)) ||
+        (hasCompletedEnough && tempData.selectedPropertyId && _.isNumber(tempData.selectedPropertyId) && tempData.selectedPropertyId < 1)
+      ) {
+        hasCompletedEnough = false
+    }
+
+    return hasCompletedEnough
+    //
+
   }
 
   render () {
+
+    var hasCompletedEnough = this.completedEnough()
 
     var steps = [
         {
@@ -100,8 +160,8 @@ export default class RegisterStepsScene extends Component<{}> {
             <List>
               <ListItem>
                 <Body>
-                  <Text style={{ fontSize: 16, fontWeight: 'bold', margin: 10 }}>To register please fill in each section. Fields marked with an * are required to initially register.</Text>
-                  <Text style={{ fontSize: 16, margin: 10 }}>Please note all sections will be required to sign a tenancy agreement.</Text>  
+                  <Text style={{ fontSize: 16, fontWeight: 'bold', margin: 5 }}>To register please fill in each section. Fields marked with an * are required to initially register.</Text>
+                  <Text style={{ fontSize: 16, margin: 5 }}>Please note all sections will be required to sign a tenancy agreement.</Text>  
                 </Body>
               </ListItem>
               {steps.map((step, index) => {
@@ -120,9 +180,12 @@ export default class RegisterStepsScene extends Component<{}> {
           </Content>
           </View>
           <View style={{ height: 80, margin: 10 }}>
-          <Button transparent block disabled={this.state.formInvalid} block style={Styles.PRIMARY_BUTTON} onPress={this.doRegister}>
-                  <Text style={Styles.PRIMARY_BUTTON_TEXT}>{this.props.Lang.registrationPaymentScene.makePayment}</Text>
-              </Button>
+          {!hasCompletedEnough && <Button disabled={true} transparent block style={Styles.PRIMARY_BUTTON_DISABLED}>
+              <Text style={Styles.PRIMARY_BUTTON_TEXT}>{this.props.Lang.registrationPaymentScene.makePayment}</Text>
+          </Button>}
+          {hasCompletedEnough && <Button transparent block style={Styles.PRIMARY_BUTTON} onPress={this.doRegister}>
+              <Text style={Styles.PRIMARY_BUTTON_TEXT}>{this.props.Lang.registrationPaymentScene.makePayment}</Text>
+          </Button>}
           </View>
         </View>
       </Container>
@@ -130,13 +193,4 @@ export default class RegisterStepsScene extends Component<{}> {
   }
 }
 
-var styles = StyleSheet.create({
-  canvas: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    bottom: 0,
-    right: 0,
-    height: 200
-  },
-});
+export default connect(mapStateToProps, mapDispatchToProps)(RegisterStepsScene);

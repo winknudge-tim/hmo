@@ -105,8 +105,6 @@ class ConfirmProfileScene extends Component<{}> {
 
      var formInvalid = !FormDataHelper.isFormValid(this.state.formData)
 
-     console.log(formInvalid)
-
      this.setState({
       formData: this.state.formData,
       formInvalid: formInvalid
