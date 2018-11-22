@@ -37,8 +37,12 @@
 			</dict>
 		</dict>
 	</dict>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>If you want import a profile picture and/or pictures of incidents then please give permission</string>
+	<key>NSCameraUsageDescription</key>
+	<string>If you want import a profile picture and/or pictures of incidents then please give permission</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string/>
+	<string>We will use your location to check you in and out of your property</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>AntDesign.ttf</string>

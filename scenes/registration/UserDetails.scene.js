@@ -14,7 +14,9 @@ import {
 import { Spinner, Container, Header, Content, Form, Thumbnail, Left, Body, Right, Button, Icon, Title, Text } from 'native-base';
 //import getTheme from './native-base-theme/components';
 //import material from './native-base-theme/variables/material';
-import ImagePicker from 'react-native-image-picker'
+// /import ImagePicker from 'react-native-image-picker'
+import ImagePicker from 'react-native-image-crop-picker';
+
 
 import { Actions } from 'react-native-router-flux';
 import { bindActionCreators } from 'redux';
@@ -107,41 +109,50 @@ class UserDetailsScene extends Component<{}> {
 
   chooseAnImage = () => {
 
-    var options = {
-        title: 'Select image',
-        customButtons: [],
-        storageOptions: {
-          skipBackup: true,
-          path: 'images'
-        }
-      };
+    ImagePicker.openPicker({
+      width: 400,
+      height: 400,
+      cropping: true,
+      mediaType: 'photo',
+      includeBase64: true
+    }).then(image => {
+      console.log(image);
+    });
+    // var options = {
+    //     title: 'Select image',
+    //     customButtons: [],
+    //     storageOptions: {
+    //       skipBackup: true,
+    //       path: 'images'
+    //     }
+    //   };
       
   
-      ImagePicker.showImagePicker(options, (response) => {
+    //   ImagePicker.showImagePicker(options, (response) => {
       
-        if (response.didCancel) {
-          console.log('User cancelled image picker');
-        }
-        else if (response.error) {
-          console.log('ImagePicker Error: ', response.error);
-        }
-        else {
+    //     if (response.didCancel) {
+    //       console.log('User cancelled image picker');
+    //     }
+    //     else if (response.error) {
+    //       console.log('ImagePicker Error: ', response.error);
+    //     }
+    //     else {
   
-          let source = {
-            uri: response.uri,
-            data: response.data,
-            height: response.height,
-            width: response.width
-          }
+    //       let source = {
+    //         uri: response.uri,
+    //         data: response.data,
+    //         height: response.height,
+    //         width: response.width
+    //       }
       
-          // You can also display the image using data:
-          // let source = { uri: 'data:image/jpeg;base64,' + response.data };
+    //       // You can also display the image using data:
+    //       // let source = { uri: 'data:image/jpeg;base64,' + response.data };
   
-          this.setState({
-            selectedImage: source
-          });
-        }
-      });
+    //       this.setState({
+    //         selectedImage: source
+    //       });
+    //     }
+    //   });
 
   }
 
