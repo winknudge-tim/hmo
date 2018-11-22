@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux';
 import { ActionConst } from 'react-native-router-flux';
 
-import { registrationReducer } from './registrationReducer';
+import { registrationReducer, submitRegReducer } from './registrationReducer';
 import { authReducer } from './authReducer'
 import { documentReducer } from './documentReducer'
 import { messagesReducer, singleMessage } from './messagesReducer'
@@ -35,5 +35,6 @@ export const appReducer = combineReducers({
     incidentAnswersReducer,
     recordedIncidentsReducer,
     registrationProgressReducer,
-    submitIncidentsReducer
+    submitIncidentsReducer,
+    submitRegReducer
 });

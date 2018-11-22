@@ -10,7 +10,7 @@ import {
   View
 } from 'react-native';
 
-import { Container, Header, Content, Form, Item, Input, Label, Left, Body, Right, Button, Icon, Title, Text, List, ListItem } from 'native-base';
+import { Container, Header, Content, Spinner, Left, Body, Right, Button, Icon, Title, Text, List, ListItem } from 'native-base';
 //import getTheme from './native-base-theme/components';
 //import material from './native-base-theme/variables/material';
 
@@ -104,7 +104,8 @@ class RegisterStepsScene extends Component<{}> {
   render () {
 
     console.log('tempData', this.props.registrationReducer.tempData)
-
+  
+    var { showSpinner } = this.props.submitRegReducer 
     var hasCompletedEnough = this.completedEnough()
 
     var steps = [
@@ -157,35 +158,36 @@ class RegisterStepsScene extends Component<{}> {
           </Right>
         </Header>
         <View style={{ flex: 1 }}>
-        <View style={{ flex: 1 }}>
-          <Content>
-            <List>
-              <ListItem>
-                <Body>
-                  <Text style={{ fontSize: 16, fontWeight: 'bold', margin: 10 }}>To register please fill in each section. Fields marked with an * are required to initially register.</Text>
-                  <Text style={{ fontSize: 16, margin: 10 }}>Please note all sections will be required to sign a tenancy agreement.</Text>  
-                </Body>
-              </ListItem>
-              {steps.map((step, index) => {
-              return (
-              <ListItem key={'step-' + index} button={true} onPress={() => { this.gotToStep(step.scene) }}>
-                  <Left>
-                      <Text>{index + 1}. {step.label}</Text>
-                  </Left>
-                  <Right>
-                      <Icon name="arrow-forward" />
-                  </Right>    
-              </ListItem>)
-              })}
+          <View style={{ flex: 1 }}>
+            <Content>
+              <List>
+                <ListItem>
+                  <Body>
+                    <Text style={{ fontSize: 16, fontWeight: 'bold', margin: 10 }}>To register please fill in each section. Fields marked with an * are required to initially register.</Text>
+                    <Text style={{ fontSize: 16, margin: 10 }}>Please note all sections will be required to sign a tenancy agreement.</Text>  
+                  </Body>
+                </ListItem>
+                {steps.map((step, index) => {
+                return (
+                <ListItem key={'step-' + index} button={true} onPress={() => { this.gotToStep(step.scene) }}>
+                    <Left>
+                        <Text>{index + 1}. {step.label}</Text>
+                    </Left>
+                    <Right>
+                        <Icon name="arrow-forward" />
+                    </Right>    
+                </ListItem>)
+                })}
 
-            </List>
-          </Content>
-          </View>
-          {hasCompletedEnough && <View style={{ height: 80, margin: 10 }}>
-            <Button transparent block disabled={this.state.formInvalid} block style={Styles.PRIMARY_BUTTON} onPress={this.doRegister}>
-                <Text style={Styles.PRIMARY_BUTTON_TEXT}>{this.props.Lang.registrationPaymentScene.makePayment}</Text>
-            </Button>
-          </View>}
+              </List>
+            </Content>
+            </View>
+            {hasCompletedEnough && <View style={{ height: 80, margin: 10 }}>
+              <Button transparent block disabled={showSpinner} block style={Styles.PRIMARY_BUTTON} onPress={this.doRegister}>
+                  {!showSpinner && <Text style={Styles.PRIMARY_BUTTON_TEXT}>{this.props.Lang.registrationPaymentScene.makePayment}</Text>}
+                  {showSpinner && <Spinner color='white' />}
+              </Button>
+            </View>}
         </View>
       </Container>
       )
