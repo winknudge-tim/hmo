@@ -96,10 +96,14 @@ class GuarantorScene extends Component<{}> {
 
   }
  
-  formInputDidChange (id, newVal, preVal) {
+  formInputDidChange (id, newVal) {
 
     if (this.state.formData[id].type === INPUT_TYPES.CURRENCY) {
      newVal = currencyFormatter.format(newVal, { symbol: '£', precision: 0 });
+    }
+
+    if (id === "guarantorDob") {
+      newVal = FormDataHelper.FormatDOB(newVal)
     }
 
     var formInvalid = !FormDataHelper.isFormValid(this.state.formData)
