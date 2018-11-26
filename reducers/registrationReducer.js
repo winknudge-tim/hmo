@@ -1,9 +1,9 @@
 
 import _ from 'lodash'
-import Lang from '../configs/Lang'
 import RegistrationService from '../services/registration.service'
 import { Actions } from 'react-native-router-flux';
-import FormDataHelper from '../helpers/FormData.helper'
+import { types as AuthTypes } from './authReducer'
+import Store from 'react-native-simple-store'
 
 
 export const types = {
@@ -105,13 +105,13 @@ function saveTempData (tempData, nextScreen) {
 
 }
 
-function getTempData (fbAuthed) {
+function getTempData () {
 
   return (dispatch) => {
 
     dispatch({ type: types.RETRIEVING_TEMP_DETAILS })
 
-    RegistrationService.getTempData(fbAuthed).then(
+    RegistrationService.getTempData().then(
       (tempData) => { // Success
 
         dispatch({ type: types.RETRIEVED_TEMP_DETAILS, tempData  })
@@ -145,6 +145,14 @@ function isUserRegistered (fbId) {
 
 }
 
+/*
+    "UsrId": "149",
+    "DateCreated": "11/26/2018 9:44:46 PM",
+    "DateUpdated": "11/26/2018 9:44:46 PM",
+    "TcyId": "58",
+    "PrpId": "1"
+*/
+
 function registerUser () {
 
   return (dispatch) => {
@@ -153,11 +161,22 @@ function registerUser () {
 
     RegistrationService.registerUser()
       .then((res) => {
-
-        console.log(res)
+        
         dispatch({ type: types.REGISTER_USER_SUCCESS, payload: res })
-        Actions.registrationCompleteScene()
+        dispatch({ type: AuthTypes.LOGIN_SUCCESSFULL, payload: res })
+        
+        return RegistrationService.getTempData()
 
+      })
+      .then((tempData) => {
+        return Store.save('LOGIN_DETAILS', {
+          username: tempData.userName,
+          password: tempData.password
+        })
+      })
+      .then(() => {
+        RegistrationService.clearTempData()
+        Actions.registrationCompleteScene()
       })
       .catch((e) => {
 

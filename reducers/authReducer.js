@@ -56,6 +56,7 @@ var logout = () => {
 
   return (dispatch) => {
     dispatch({ type: types.LOGGED_OUT })
+    RegistrationService.clearTempData()
     Actions.register()
   }
 
@@ -90,6 +91,7 @@ var loginWithEmail = (username, password) => {
         })
       })
       .then(() => {
+        RegistrationService.clearTempData()
         Actions.main()
       })
       .catch((e) => {
@@ -121,7 +123,6 @@ var registerWithEmail = () => {
 
   return () => {
     
-    RegistrationService.clearTempData()
     Actions.reigsterSteps();
 
   }

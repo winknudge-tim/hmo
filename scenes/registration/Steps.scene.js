@@ -71,7 +71,7 @@ class RegisterStepsScene extends Component<{}> {
   }
 
   doRegister = () => {
-    //this.props.registerUser(tempData)
+    this.props.registerUser()
   }
 
   completedEnough = () => {
