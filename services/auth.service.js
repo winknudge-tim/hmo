@@ -1,95 +1,42 @@
-// import { AccessToken, LoginManager, GraphRequest, GraphRequestManager } from 'react-native-fbsdk'
+import Config from '../configs'
 
-hasFBAccessToken = function () {
+import _ from 'lodash'
 
-	return new Promise (function (resolve, reject) {
+import constants from '../configs/constants'
 
-		// AccessToken.getCurrentAccessToken().then(
-		// 	(fbData) => {
-		// 		resolve({
-		// 			fb: fbData
-		// 		})
-		// 	},
-		// 	(error) => {
-		// 		console.log('Error');
-		// 		reject(error)
-		// 	}
-		// );
+loginWithEmail = function (sUsername, sPassword) {
 
+	return new Promise((resolve, reject) => {
 
-	})
-
-}
-
-loginWithFacebook = function () {
-
-	return new Promise (function (resolve, reject) {
-		console.log('logInWithReadPermissions')
-		LoginManager.logInWithReadPermissions(['public_profile', 'email', 'user_photos', 'user_likes']).then(
-            resolve,
-            reject
-          );
-
-	})
-
-}
-
-logOutOfFacebook = function () {
-
-	LoginManager.logOut()
-
-}
-
-function _getFacebookUser (accessToken, userID) {
-
-	return new Promise (function (resolve, reject) {
-
-		function _responseInfoCallback(error: ?Object, result: ?Object) {
-		  if (error) {
-		    reject(error.toString())
-		  } else {
-		    resolve(result)
-		  }
+		var data = {
+			sUsername,
+			sPassword
 		}
-
-		const infoRequest = new GraphRequest(
-		  '/me',
-		  {
-		  	accessToken: accessToken,
-		  	parameters: {
-				fields: {
-					string: 'id, first_name, last_name, email, birthday, gender'
-				}
-		    }
-		  },
-		  _responseInfoCallback,
-		);
-		// Start the graph request.
-		new GraphRequestManager().addRequest(infoRequest).start();
-
-	})
-
-}
-
-getFacebookUser = function () {
-
-	return new Promise (function (resolve, reject) {
-
-		AccessToken.getCurrentAccessToken().then(
-			(fbData) => {
-			
-				_getFacebookUser(fbData.accessToken, fbData.userID).then(
-					(result) => {
-
-						resolve(result)
-
-					},
-					reject
-				)
-
-			},
-			reject
-		);	
+		console.log('attempt to login')
+		fetch(
+			Config.API_URL + 'auth/signin',
+			{
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/x-www-form-urlencoded',
+					'apiKey': Config.API_KEY
+				},
+				body: JSON.stringify(data)
+			}
+		)
+		.then((response) => response.json())
+		.then((responseJson) => {
+			console.log(responseJson)
+			if (!responseJson.PrpId && responseJson.PrpId === "0") {
+				return reject(new Error("No user found"))
+			}
+			return resolve(responseJson)
+		})
+		.catch(function(error) {
+			console.log('error')
+			console.log(error)
+			reject('register error')
+		});
 
 	})
 
@@ -97,8 +44,5 @@ getFacebookUser = function () {
 }
 
 export default {
-	hasFBAccessToken,
-	loginWithFacebook,
-	logOutOfFacebook,
-	getFacebookUser
+	loginWithEmail
 }

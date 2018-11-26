@@ -49,6 +49,7 @@ defaults.county = "County"
 defaults.postcode = "Postcode"
 defaults.previousAddress = "Previous address"
 //Buttons
+defaults.login = "Login"
 defaults.save = "Save"
 defaults.next = "Next"
 defaults.submit = "Submit"
@@ -91,6 +92,7 @@ signDocument.sign = "I agree"
 register.title = "Register"
 register.instructions = "To register you will need a Facebook account."
 register.facebookLogin = "Login with Facebook"
+
 
 // USER DETAILS
 userDetails.title = "Login details"
