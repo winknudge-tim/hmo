@@ -16,13 +16,13 @@ import { Spinner, Container, Header, Content, Form, Thumbnail, Left, Body, Right
 //import getTheme from './native-base-theme/components';
 //import material from './native-base-theme/variables/material';
 // /import ImagePicker from 'react-native-image-picker'
-import ImagePicker from 'react-native-image-crop-picker';
 import Store from 'react-native-simple-store'
 
 
 import { Actions } from 'react-native-router-flux';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { actions } from '../../reducers/authReducer'
 
 import FormDataHelper from '../../helpers/FormData.helper'
 
@@ -31,9 +31,6 @@ import { default as FormInput } from '../../components/FormInput'
 import constants from '../../configs/constants'
 const { INPUT_TYPES } = constants
 
-import IMAGES from '../../configs/images'
-
-import { actions } from '../../reducers/authReducer'
 
 import Styles from '../../configs/styles'
 
@@ -119,8 +116,8 @@ class LoginScene extends Component<{}> {
         </Content>
         <View style={{ height: 80, margin: 10 }}>
           <Button transparent disabled={this.state.formInvalid || this.props.authReducer.showSpinner} block style={[Styles.PRIMARY_BUTTON, this.state.formInvalid && Styles.PRIMARY_BUTTON_DISABLED]} onPress={this.attemptToLogin.bind(this)}>
-            {!this.props.authReducer.showSpinner && <Text style={Styles.PRIMARY_BUTTON_TEXT}>{this.props.Lang.confirmProfile.save}</Text>}
-            {this.props.authReducer.showSpinner && <Spinner />}
+            {!this.props.authReducer.showSpinner && <Text style={Styles.PRIMARY_BUTTON_TEXT}>{this.props.Lang.confirmProfile.login}</Text>}
+            {this.props.authReducer.showSpinner && <Spinner color='white' />}
           </Button>
         </View>
       </View>

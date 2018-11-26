@@ -106,7 +106,6 @@ const Scenes = Actions.create(
       <Scene key="calendarScene" component={ CalendarScene } Lang={Lang} />
 
       <Scene key="checklistScene" component={ChecklistScene} Lang={Lang} />
-      <Scene key="profileScene" component={ ProfileScene } Lang={Lang} />
     </Stack>
   </Scene>
 )

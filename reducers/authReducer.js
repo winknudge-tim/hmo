@@ -9,7 +9,8 @@ import Store from 'react-native-simple-store'
 export const types = {
   LOGIN_REQUESTED: 'LOGIN_REQUESTED',
   LOGIN_SUCCESSFULL: 'LOGIN_SUCCESSFULL',
-  LOGIN_FAILED: 'LOGIN_FAILED'
+  LOGIN_FAILED: 'LOGIN_FAILED',
+  LOGGED_OUT: 'LOGGED_OUT'
 }
 //1, 47
 export const initialState = {
@@ -40,13 +41,24 @@ export const authReducer = (state = initialState, action) => {
   switch (action.type) {
     case types.LOGIN_REQUESTED:
       return { ...state, showSpinner: true, hasError: false, error: null }
-    case regTypes.LOGIN_SUCCESSFULL:
+    case types.LOGIN_SUCCESSFULL:
       return { ...state, showSpinner: false, hasError: false, error: null, payload: action.payload, userId: action.payload.UsrId, propId: action.payload.PrpId }
-      case regTypes.LOGIN_FAILED:
+    case types.LOGIN_FAILED:
       return { ...state, showSpinner: false, hasError: true, error: action.error }
+    case types.LOGGED_OUT:
+      return { ...state, showSpinner: false, hasError: false, error: null, payload: null, userId: null, propId: null }
     default:
       return state
   }
+}
+
+var logout = () => {
+
+  return (dispatch) => {
+    dispatch({ type: types.LOGGED_OUT })
+    Actions.register()
+  }
+
 }
 
 var loginWithEmail = (username, password) => {
@@ -117,6 +129,7 @@ var registerWithEmail = () => {
 }
 
 export const actions = {
+  logout,
   goToLogin,
   loginWithEmail,
   registerWithEmail

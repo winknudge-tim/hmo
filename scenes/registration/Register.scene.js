@@ -56,29 +56,24 @@ class RegisterScene extends Component<{}> {
 
   doRender () {
 
-    if (this.props.authReducer.showSpinner) {
-      return (<Spinner />)
-    } else {
-
-      return (
-        <Grid>
-          <Row>
-            <Col>
-              <Button transparent block onPress={this.props.registerWithEmail} block style={Styles.PRIMARY_BUTTON}>
-                <Text style={Styles.PRIMARY_BUTTON_TEXT}>Register</Text>
-              </Button>
-            </Col>
-          </Row>
-          <Row>
-            <Col>
-              <Button transparent block onPress={this.props.goToLogin} block style={Styles.SECONDARY_BUTTON}>
-                <Text style={Styles.SECONDARY_BUTTON_TEXT}>Login</Text>
-              </Button>
-            </Col>
-          </Row>
-        </Grid>
-      )
-    }
+    return (
+      <Grid>
+        <Row>
+          <Col>
+            <Button transparent block onPress={this.props.registerWithEmail} block style={Styles.PRIMARY_BUTTON}>
+              <Text style={Styles.PRIMARY_BUTTON_TEXT}>Register</Text>
+            </Button>
+          </Col>
+        </Row>
+        <Row>
+          <Col>
+            <Button transparent block onPress={this.props.goToLogin} block style={Styles.SECONDARY_BUTTON}>
+              <Text style={Styles.SECONDARY_BUTTON_TEXT}>Login</Text>
+            </Button>
+          </Col>
+        </Row>
+      </Grid>
+    )
                  
 
   }
