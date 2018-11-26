@@ -60,12 +60,15 @@ import IncidentFaqAnswer from './scenes/incidents/FaqAnswer.scene'
 import ProfileScene from './scenes/profile/Profile.scene'
 import CardDetailsScene from './scenes/profile/Card-details.scene'
 
-//<Scene type={ActionConst.RESET} key="registerScene" component={ RegisterScene } Lang={Lang}  />
+import LoginScene from './scenes/auth/Login.scene'
+
+//
 const Scenes = Actions.create(
   <Scene key="root" hideNavBar={true}>
     <Stack  key='register' type={ActionConst.RESET} hideNavBar={true}>
+      <Scene type={ActionConst.RESET} key="registerScene" component={ RegisterScene } Lang={Lang}  />
       <Scene key="reigsterSteps" component={ RegisterSteps } Lang={Lang} />
-      
+      <Scene key="loginScene" component={ LoginScene } Lang={Lang} />
       <Scene key="userDetailsScene" component={ UserDetailsScene } Lang={Lang} />
       <Scene key="profilePictureScene" component={ ProfilePictureScene } Lang={Lang} />
       <Scene key="confirmProfile" component={ ConfirmProfile } Lang={Lang} />

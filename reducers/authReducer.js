@@ -96,18 +96,28 @@ var loginWithEmail = (username, password) => {
 
 }
 
+var goToLogin = () => {
+  
+  return () => {
+    Actions.loginScene()
+  }
+
+}
+
+
 var registerWithEmail = () => {
 
-  return (dispatch) => {
+  return () => {
     
     RegistrationService.clearTempData()
-    Actions.main();
+    Actions.reigsterSteps();
 
   }
 
 }
 
 export const actions = {
+  goToLogin,
   loginWithEmail,
   registerWithEmail
 }

@@ -58,34 +58,6 @@ class RegisterScene extends Component<{}> {
 
     if (this.props.authReducer.showSpinner) {
       return (<Spinner />)
-    } else if (this.props.authReducer.fbAuthed) {
-
-      if (this.props.authReducer.isAlreadyRegistered) {
-        setTimeout(function() {
-          Actions.main()
-        }, 1000)
-        return;
-      }
-
-      return (
-        <Grid>
-          <Row>
-            <Col>
-            <Button transparent block onPress={Actions.confirmProfile} style={Styles.PRIMARY_BUTTON}>
-              <Text style={Styles.PRIMARY_BUTTON_TEXT}>Continue with registration</Text>
-            </Button>
-            </Col>
-          </Row>
-          <Row>
-            <Col>
-            <Button transparent block onPress={this.props.logOutOfFacebook.bind(this)} style={Styles.SECONDARY_BUTTON}>
-              <Text style={Styles.PRIMARY_BUTTON_TEXT}>Logout of Facebook</Text>
-            </Button>
-            </Col>
-          </Row>
-        </Grid>
-      )
-
     } else {
 
       return (
@@ -99,7 +71,7 @@ class RegisterScene extends Component<{}> {
           </Row>
           <Row>
             <Col>
-              <Button transparent block onPress={this.props.loginWithEmail} block style={Styles.SECONDARY_BUTTON}>
+              <Button transparent block onPress={this.props.goToLogin} block style={Styles.SECONDARY_BUTTON}>
                 <Text style={Styles.SECONDARY_BUTTON_TEXT}>Login</Text>
               </Button>
             </Col>
