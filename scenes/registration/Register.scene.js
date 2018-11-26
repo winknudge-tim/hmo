@@ -144,7 +144,8 @@ const styles = {
   logo: {
     marginTop: 50,
     height: 120,
-    width: deviceWidth-50
+    width: deviceWidth-50,
+    resizeMode: 'contain'
   },
   btnCotainer: {
     height: 120
