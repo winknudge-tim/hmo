@@ -101,9 +101,13 @@ class ConfirmProfileScene extends Component<{}> {
  
   formInputDidChange (id, newText) {
 
-     this.state.formData[id].value = newText
+    this.state.formData[id].value = newText
 
-     var formInvalid = !FormDataHelper.isFormValid(this.state.formData)
+    if (id === "dob") {
+      this.state.formData[id].value = FormDataHelper.FormatDOB(newText)
+    }
+
+    var formInvalid = !FormDataHelper.isFormValid(this.state.formData)
 
      this.setState({
       formData: this.state.formData,

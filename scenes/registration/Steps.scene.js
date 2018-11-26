@@ -6,7 +6,7 @@
 
 import React, { Component } from 'react';
 import {
-  StyleSheet,
+  ScrollView,
   View
 } from 'react-native';
 
@@ -159,7 +159,7 @@ class RegisterStepsScene extends Component<{}> {
         </Header>
         <View style={{ flex: 1 }}>
           <View style={{ flex: 1 }}>
-            <Content>
+            <ScrollView>
               <List>
                 <ListItem>
                   <Body>
@@ -180,7 +180,7 @@ class RegisterStepsScene extends Component<{}> {
                 })}
 
               </List>
-            </Content>
+            </ScrollView>
             </View>
             {hasCompletedEnough && <View style={{ height: 80, margin: 10 }}>
               <Button transparent block disabled={showSpinner} block style={Styles.PRIMARY_BUTTON} onPress={this.doRegister}>
