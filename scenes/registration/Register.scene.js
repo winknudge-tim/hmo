@@ -1,19 +1,18 @@
 
 import React, { Component } from 'react';
 import {
-  Platform,
   Image,
-  Dimensions
+  Dimensions,
+  SafeAreaView
 } from 'react-native';
 
 import PropTypes from 'prop-types'
 
-import { Container, Header, Content, Left, Body, Right, Button, Icon, Title, Text, Spinner } from 'native-base';
+import { Container, Button, Text } from 'native-base';
 //import getTheme from './native-base-theme/components';
 //import material from './native-base-theme/variables/material';
 import { Col, Row, Grid } from 'react-native-easy-grid';
 
-import { Actions } from 'react-native-router-flux';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
@@ -83,18 +82,20 @@ class RegisterScene extends Component<{}> {
     return (
        <Container>
           <Image source={ImageConfig.HOME_SPLASH_IMAGE} style={styles.bgImg} />
-          <Grid style={{ margin: 12 }}>
-            <Row>
-              <Col>
-                <Image source={ImageConfig.HOME_LOGO}  style={styles.logo} />
-              </Col>
-            </Row>
-            <Row style={styles.btnCotainer}>
-              <Col>
-                {this.doRender()}
-              </Col>
-            </Row>
-          </Grid>
+          <SafeAreaView style={{flex: 1 }}>
+            <Grid style={{ margin: 12 }}>
+              <Row>
+                <Col>
+                  <Image source={ImageConfig.HOME_LOGO}  style={styles.logo} />
+                </Col>
+              </Row>
+              <Row style={styles.btnCotainer}>
+                <Col>
+                  {this.doRender()}
+                </Col>
+              </Row>
+            </Grid>
+          </SafeAreaView>
       </Container>
     );
 
