@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "100124285456",
+    "firebase_url": "https://hmo-app.firebaseio.com",
+    "project_id": "hmo-app",
+    "storage_bucket": "hmo-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:100124285456:android:7ebbd75def2b66d1",
+        "android_client_info": {
+          "package_name": "com.hmo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "100124285456-nasf4uua4kebnnrqoacehruj0i8m8afk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDkPU4q-ZXZPVxIBtaVrTBzlaws65a-LhE"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
