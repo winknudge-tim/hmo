@@ -21,7 +21,7 @@
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
-	<string>4</string>
+	<string>9</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAppTransportSecurity</key>
@@ -39,6 +39,8 @@
 	</dict>
 	<key>NSCameraUsageDescription</key>
 	<string>If you want import a profile picture and/or pictures of incidents then please give permission</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>We use your location to check when you are in and out</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>We will use your location to check you in and out of your property</string>
 	<key>NSPhotoLibraryUsageDescription</key>

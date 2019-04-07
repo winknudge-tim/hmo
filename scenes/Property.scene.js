@@ -6,17 +6,16 @@
 
 import React, { Component } from 'react';
 import {
-  Platform,
   Image,
   Dimensions
 } from 'react-native';
 
 import _ from 'lodash'
 
-import { Container, Header, Content, Form, Item, Input, Label, Left, Body, Right, Button, Icon, Title, Text, List, ListItem, Badge } from 'native-base';
+import { Container, Header, Content, Left, Body, Right, Button, Icon, Title, Text, List, ListItem, Badge } from 'native-base';
 //import getTheme from './native-base-theme/components';
 //import material from './native-base-theme/variables/material';
-import { Col, Row, Grid } from 'react-native-easy-grid';
+
 
 import { Actions } from 'react-native-router-flux';
 
@@ -25,12 +24,15 @@ import ImageConfig from '../configs/images'
 
 import ProgressBar from '../components/ProgressBar'
 
-const { height: deviceHeight, width: deviceWidth } = Dimensions.get('window');
+const { width: deviceWidth } = Dimensions.get('window');
 
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
 import { actions as rtActions } from '../reducers/registrationProgressReducer'
+import { actions as locationActions } from '../actions/locationActions'
+
+import firebase from 'react-native-firebase';
 
 class PropertyScene extends Component<{}> {
   
@@ -42,7 +44,37 @@ class PropertyScene extends Component<{}> {
   }
 
   componentDidMount() {
-    this.props.getRegistrationProgress(this.props.authReducer.userId)
+    this.props.getRegistrationProgress(this.props.authReducer.userId)  
+    
+    firebase.messaging().hasPermission()
+      .then(enabled => {
+       
+        if (enabled) {
+          // user has permissions
+          firebase.messaging().getToken()
+          .then(fcmToken => {
+            if (fcmToken) {
+              // user has a device token
+              console.log(fcmToken)
+            } else {
+              // user doesn't have a device token yet
+            } 
+          });
+          
+        } else {
+          // user doesn't have permission
+
+          firebase.messaging().requestPermission()
+            .then(() => {
+              // User has authorised  
+              console.log('authired')
+            })
+            .catch(error => {
+              // User has rejected permissions  
+              console.log(error)
+            });
+        } 
+      })
   }
 
   goBack () {
@@ -59,7 +91,7 @@ class PropertyScene extends Component<{}> {
 
   render () {
 
-    var { registrationProgressReducer } = this.props
+    var { registrationProgressReducer, locationReducer } = this.props
 
     var registrationProgress = registrationProgressReducer.payload || []
 
@@ -105,6 +137,21 @@ class PropertyScene extends Component<{}> {
                 <Icon name="arrow-forward" />
               </Right>
             </ListItem>}
+            <ListItem button={true} onPress={() => { this.props.setLocation(!locationReducer.userAtHome) }}>
+              <Left>
+                <Icon name="navigate" />
+                <Text>Check {locationReducer.userAtHome ? 'out' : 'in'}</Text>
+              </Left>
+            </ListItem>
+            <ListItem button={true} onPress={Actions.housematesScene}>
+              <Left>
+                <Icon name="people" />
+                <Text>Housemates home</Text>
+              </Left>
+              <Right>
+                <Icon name="arrow-forward" />
+              </Right>
+            </ListItem>
             <ListItem button={true} onPress={Actions.conversationsScene}>
               <Left>
                 <Icon name="chatbubbles" />
@@ -167,7 +214,8 @@ function mapStateToProps (state) {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  ...bindActionCreators(rtActions, dispatch)
+  ...bindActionCreators(rtActions, dispatch),
+  ...bindActionCreators(locationActions, dispatch)
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(PropertyScene);

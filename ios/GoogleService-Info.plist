@@ -7,9 +7,9 @@
 	<key>AD_UNIT_ID_FOR_INTERSTITIAL_TEST</key>
 	<string>ca-app-pub-3940256099942544/4411468910</string>
 	<key>CLIENT_ID</key>
-	<string>100124285456-q23b3e8031s3qlej5cml9s8cea0pnntu.apps.googleusercontent.com</string>
+	<string>100124285456-8t0kjeei93al05nsa7q2kd1oi7s53ruj.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.100124285456-q23b3e8031s3qlej5cml9s8cea0pnntu</string>
+	<string>com.googleusercontent.apps.100124285456-8t0kjeei93al05nsa7q2kd1oi7s53ruj</string>
 	<key>API_KEY</key>
 	<string>AIzaSyDTGfiQufOdk7MN_3qT2Y2zEMQHr15m1Bk</string>
 	<key>GCM_SENDER_ID</key>
@@ -17,7 +17,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>uk.co.vulcantechnologies.hmo</string>
+	<string>uk-co-winknudge-co-uk-winknudg-hmoApp</string>
 	<key>PROJECT_ID</key>
 	<string>hmo-app</string>
 	<key>STORAGE_BUCKET</key>
@@ -33,7 +33,7 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:100124285456:ios:8103a227eb0181d1</string>
+	<string>1:100124285456:ios:a4398c519f6d7b92</string>
 	<key>DATABASE_URL</key>
 	<string>https://hmo-app.firebaseio.com</string>
 </dict>

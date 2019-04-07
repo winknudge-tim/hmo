@@ -42,11 +42,11 @@ export const authReducer = (state = initialState, action) => {
     case types.LOGIN_REQUESTED:
       return { ...state, showSpinner: true, hasError: false, error: null }
     case types.LOGIN_SUCCESSFULL:
-      return { ...state, showSpinner: false, hasError: false, error: null, payload: action.payload, userId: action.payload.UsrId, propId: action.payload.PrpId }
+      return { ...state, showSpinner: false, hasError: false, error: null, payload: action.payload, userId: action.payload.UsrId, propId: action.payload.PrpId, user: action.payload }
     case types.LOGIN_FAILED:
       return { ...state, showSpinner: false, hasError: true, error: action.error }
     case types.LOGGED_OUT:
-      return { ...state, showSpinner: false, hasError: false, error: null, payload: null, userId: null, propId: null }
+      return { ...state, showSpinner: false, hasError: false, error: null, payload: null, userId: null, user: null, propId: null }
     default:
       return state
   }
@@ -77,13 +77,10 @@ var loginWithEmail = (username, password) => {
       return
     }
 
-    console.log('ok lett attempt to login')
-
     dispatch({ type: types.LOGIN_REQUESTED })
 
     AuthService.loginWithEmail(username, password)
       .then((payload) => {
-        console.log('logged in')
         dispatch({ type: types.LOGIN_SUCCESSFULL, payload })
         return Store.save('LOGIN_DETAILS', {
           username,
@@ -95,16 +92,15 @@ var loginWithEmail = (username, password) => {
         Actions.main()
       })
       .catch((e) => {
-        console.log('error?')
         dispatch({ type: types.LOGIN_FAILED, error: e })
-        Alert.alert(
-          'Login failed',
-          'Your details do no match what is in our system',
-          [
-            {text: 'OK', onPress: () => console.log('OK Pressed')},
-          ],
-          { cancelable: false }
-        )
+        // Alert.alert(
+        //   'Login failed',
+        //   'Your details do no match what is in our system',
+        //   [
+        //     {text: 'OK', onPress: () => console.log('OK Pressed')},
+        //   ],
+        //   { cancelable: false }
+        // )
       })
   }
 

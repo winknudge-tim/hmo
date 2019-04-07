@@ -8,6 +8,7 @@ import { messagesReducer, singleMessage } from './messagesReducer'
 import { propertyReducer } from './propertyReducer'
 import { incidentFAQReducer, incidentTreeQuestionsReducer, incidentAnswersReducer, recordedIncidentsReducer, submitIncidentsReducer } from './incidentReducer'
 import { registrationProgressReducer } from './registrationProgressReducer'
+import { locationReducer } from './locationReducder'
 
 const initialState = {
     scene: {}
@@ -36,5 +37,6 @@ export const appReducer = combineReducers({
     recordedIncidentsReducer,
     registrationProgressReducer,
     submitIncidentsReducer,
-    submitRegReducer
+    submitRegReducer,
+    locationReducer
 });

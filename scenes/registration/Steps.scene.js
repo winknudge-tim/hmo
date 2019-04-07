@@ -147,7 +147,7 @@ class RegisterStepsScene extends Component<{}> {
       <Container>
         <Header style={Styles.HEADER}>
           <Left>
-            <Button transparent onPress={this.goBack}>
+            <Button transparent onPress={Actions.pop}>
               <Icon name='arrow-back' style={Styles.HEADER_ICON} />
             </Button>
           </Left>

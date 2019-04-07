@@ -6,7 +6,8 @@
 
 import React, { Component } from 'react';
 import {
-  StyleSheet
+  StyleSheet,
+  Clipboard
 } from 'react-native';
 
 import { Container, Header, Content, Left, Body, Right, Button, Icon, Title, Text, List, ListItem } from 'native-base';
@@ -18,6 +19,9 @@ import { Actions } from 'react-native-router-flux';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { actions } from '../../reducers/authReducer'
+
+import firebase from 'react-native-firebase';
+
 
 function mapStateToProps (state) {
   return state
@@ -52,6 +56,60 @@ class ProfileScene extends Component<{}> {
 
   }
 
+  doCopy = () => {
+
+    firebase.messaging().getToken()
+    .then(fcmToken => {
+      if (fcmToken) {
+        // user has a device token
+        Clipboard.setString(fcmToken)
+        alert('copied')
+      } else {
+        alert('no toekn')
+        // user doesn't have a device token yet
+      } 
+    })
+    .catch((err) => {
+      console.log(err)
+      alert('error')
+    })
+
+  }
+
+  copyNotifcationId () {
+    
+
+    firebase.messaging().hasPermission()
+      .then(enabled => {
+        console.log(enabled)
+       
+        if (enabled) {
+          // user has permissions
+         this.doCopy()
+          
+        } else {
+          // user doesn't have permission
+
+          firebase.messaging().requestPermission()
+            .then(() => {
+              // User has authorised  
+              console.log('authired')
+              this.doCopy()
+            })
+            .catch(error => {
+              // User has rejected permissions  
+              console.log(error)
+              alert('you rejected')
+            });
+        } 
+      })
+      .catch((err) => {
+        console.log(err)
+        alert('error')
+      })
+
+  }
+
   render () {
     return (
       <Container>
@@ -69,6 +127,15 @@ class ProfileScene extends Component<{}> {
         </Header>
         <Content>          
          <List>
+          <ListItem button={true} onPress={this.copyNotifcationId.bind(this)}>
+              <Left>
+                <Icon name="exit" />
+                <Text>Copy notifcations id</Text>
+              </Left>
+              <Right>
+                <Icon name="arrow-forward" />
+              </Right>
+            </ListItem>
             <ListItem button={true} onPress={this.doLogout.bind(this)}>
               <Left>
                 <Icon name="exit" />

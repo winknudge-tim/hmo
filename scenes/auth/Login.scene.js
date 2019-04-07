@@ -8,11 +8,10 @@ import _ from 'lodash'
 import React, { Component } from 'react';
 import {
   View,
-  TouchableOpacity,
   Alert
 } from 'react-native';
 
-import { Spinner, Container, Header, Content, Form, Thumbnail, Left, Body, Right, Button, Icon, Title, Text } from 'native-base';
+import { Spinner, Container, Header, Content, Form, Left, Body, Right, Button, Icon, Title, Text } from 'native-base';
 //import getTheme from './native-base-theme/components';
 //import material from './native-base-theme/variables/material';
 // /import ImagePicker from 'react-native-image-picker'
@@ -66,7 +65,6 @@ class LoginScene extends Component<{}> {
 
     Store.get('LOGIN_DETAILS')
       .then(({username, password}) => {
-        console.log(username, password)
         this.state.formData.userName.value = username
         this.state.formData.password.value = password
         this.setState({
@@ -77,6 +75,22 @@ class LoginScene extends Component<{}> {
       .catch(() => {
 
       })
+
+  }
+
+  componentWillReceiveProps (nextProps) {
+
+    if (this.props.authReducer.error !== nextProps.authReducer.error && nextProps.authReducer.error) {
+      console.log(nextProps.authReducer.error)
+       Alert.alert(
+          'Login failed',
+          'Your details do no match what is in our system',
+          [
+            {text: 'OK', onPress: () => console.log('OK Pressed')},
+          ],
+          { cancelable: false }
+        )
+    }
 
   }
 
@@ -107,13 +121,15 @@ class LoginScene extends Component<{}> {
     return (
 
       <View style={{ flex: 1 }}>
-        <Content style={{ padding: 10 }}>
-          <Text>{this.props.Lang.userDetails.instructions}</Text>
-            <Form style={{ marginLeft: -12 }}>
-              <FormInput {...formData.userName} onChangeText={this.formInputDidChange.bind(this)} disableAutoCapitalize={true} />
-              <FormInput {...formData.password} onChangeText={this.formInputDidChange.bind(this)} secureTextEntry={true} />
-            </Form>
-        </Content>
+        <View style={{ flex: 1 }}>
+          <View style={{ padding: 10 }}>
+            <Text>{this.props.Lang.userDetails.instructions}</Text>
+              <Form style={{ marginLeft: -12 }}>
+                <FormInput {...formData.userName} onChangeText={this.formInputDidChange.bind(this)} disableAutoCapitalize={true} />
+                <FormInput {...formData.password} onChangeText={this.formInputDidChange.bind(this)} secureTextEntry={true} />
+              </Form>
+          </View>
+        </View>
         <View style={{ height: 80, margin: 10 }}>
           <Button transparent disabled={this.state.formInvalid || this.props.authReducer.showSpinner} block style={[Styles.PRIMARY_BUTTON, this.state.formInvalid && Styles.PRIMARY_BUTTON_DISABLED]} onPress={this.attemptToLogin.bind(this)}>
             {!this.props.authReducer.showSpinner && <Text style={Styles.PRIMARY_BUTTON_TEXT}>{this.props.Lang.confirmProfile.login}</Text>}

@@ -8,7 +8,7 @@ import {
 
 import PropTypes from 'prop-types'
 
-import { Container, Button, Text } from 'native-base';
+import { Container, Button, Text, Spinner } from 'native-base';
 //import getTheme from './native-base-theme/components';
 //import material from './native-base-theme/variables/material';
 import { Col, Row, Grid } from 'react-native-easy-grid';
@@ -21,6 +21,8 @@ import { actions as authActions } from '../../reducers/authReducer'
 
 import Styles from '../../configs/styles'
 import ImageConfig from '../../configs/images'
+
+import Store from 'react-native-simple-store'
 
 const { height: deviceHeight, width: deviceWidth } = Dimensions.get('window');
 
@@ -40,20 +42,31 @@ class RegisterScene extends Component<{}> {
   };
 
   componentDidMount () {
+    //this.props.loginWithEmail()
+    Store.get('LOGIN_DETAILS')
+      .then(({username, password}) => {
+        console.log(username, password)
+        this.props.loginWithEmail(username, password)
+      })
+      .catch(() => {
 
-    //this.props.checkForFBAccessToken()
-    //this.props.isUserRegistered()
+      })
+
 
   }
 
   componentWillReceiveProps (nextProps) {
 
-    console.log(nextProps.authReducer.fbAuthed)
+    
     console.log(nextProps.registrationReducer)
 
   }
 
   doRender () {
+
+    if (this.props.authReducer.showSpinner) {
+      return (<Spinner color='white' />)
+    }
 
     return (
       <Grid>

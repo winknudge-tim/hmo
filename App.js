@@ -1,7 +1,7 @@
 import React from 'react';
 
 
-import { Actions, Scene, ActionConst, Stack, Modal } from 'react-native-router-flux';
+import { Actions, Scene, ActionConst, Stack } from 'react-native-router-flux';
 
 import Lang from './configs/Lang';
 
@@ -18,7 +18,8 @@ import ConversationsScene from './scenes/messaging/Conversations.scene'
 import ConversationScene from './scenes/messaging/Conversation.scene'
 import NewConversationScene from './scenes/messaging/New-conversation.scene'
 
-// Incidents
+// Housemates
+import HousematesScene from './scenes/housemates/Housemates.scene'
 
 // Products
 import ProductsScene from './scenes/products/Products.scene'
@@ -80,7 +81,7 @@ const Scenes = Actions.create(
       <Scene key="registrationPaymentScene" component={ RegistrationPaymentScene } Lang={Lang} />
       <Scene key="registrationCompleteScene" component={ RegistrationCompleteScene } Lang={Lang} />
     </Stack>
-    <Stack  key='main' type={ActionConst.RESET} hideNavBar={true}>
+    <Stack key='main' type={ActionConst.RESET} hideNavBar={true}>
       <Scene key="propertyScene" component={ PropertyScene } Lang={Lang} />
       <Scene key="conversationsScene" component={ ConversationsScene } Lang={Lang} />
       <Scene key="conversationScene" component={ ConversationScene } Lang={Lang} />
@@ -91,6 +92,8 @@ const Scenes = Actions.create(
 
       <Scene key="productsScene" component={ ProductsScene } Lang={Lang} />
       <Scene key="productScene" component={ ProductScene } Lang={Lang} />
+
+      <Scene key="housematesScene" component={ HousematesScene } Lang={Lang} />
       
       <Scene  key="incidentsScene" component={ IncidentsScene } Lang={Lang} />
       <Scene  key="incidentFaqScene" component={ IncidentFaqScene } Lang={Lang} />
