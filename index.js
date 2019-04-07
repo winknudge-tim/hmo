@@ -15,7 +15,6 @@ import {
 import { Provider, connect } from 'react-redux';
 import { createStore, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
-import devTools from 'remote-redux-devtools';
 import { Router } from 'react-native-router-flux';
 
 import { appReducer } from './reducers';
@@ -29,11 +28,7 @@ const ConnectedRouter = connect()(Router);
 
 const enhancer = compose(
   applyMiddleware(thunk),
-  devTools({
-    name: Platform.OS,
-    hostname: 'localhost',
-    port: 5678
-  })
+  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 );
 
 //const composeEnhancers = composeWithDevTools({ realtime: true, port: 8000 });
