@@ -54,13 +54,6 @@ class RegisterScene extends Component<{}> {
 
   }
 
-  componentWillReceiveProps (nextProps) {
-
-    
-    console.log(nextProps.registrationReducer)
-
-  }
-
   doRender () {
 
     if (this.props.authReducer.showSpinner) {
@@ -90,7 +83,6 @@ class RegisterScene extends Component<{}> {
   }
 
   render () {
-
     return (
        <Container>
           <Image source={ImageConfig.HOME_SPLASH_IMAGE} style={styles.bgImg} />
@@ -103,13 +95,13 @@ class RegisterScene extends Component<{}> {
               </Row>
               <Row style={styles.btnCotainer}>
                 <Col>
-                  {this.doRender()}
+                  {this.props.authReducer.userId === null && this.doRender()}
                 </Col>
               </Row>
             </Grid>
           </SafeAreaView>
       </Container>
-    );
+    )
 
 
   }
