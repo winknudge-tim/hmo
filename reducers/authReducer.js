@@ -57,7 +57,18 @@ var logout = () => {
   return (dispatch) => {
     dispatch({ type: types.LOGGED_OUT })
     RegistrationService.clearTempData()
-    Actions.register()
+    Store.get('LOGIN_DETAILS').then(
+
+			(data) => {
+				if (data) {
+          Store.delete('LOGIN_DETAILS')
+          Actions.register()
+				}
+			},
+			(err) => {
+				console.error(err)
+			})
+    
   }
 
 }
