@@ -45,7 +45,6 @@ class RegisterScene extends Component<{}> {
     //this.props.loginWithEmail()
     Store.get('LOGIN_DETAILS')
       .then(({username, password}) => {
-        console.log(username, password)
         this.props.loginWithEmail(username, password)
       })
       .catch(() => {
