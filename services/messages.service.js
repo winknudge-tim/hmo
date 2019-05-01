@@ -61,7 +61,6 @@ const getChat = function getChatFromServer (iChaId) {
 		})
 		.then((response) => response.json())
 		.then((responseJson) => {
-			console.log(responseJson)
 			resolve(responseJson.messages)
 		})
 		.catch(reject);
@@ -90,7 +89,9 @@ const createMessage = function createMessageOnServer (iPrpId, iUsrId, sTitle) {
 			},
 			body: sendData
 		})
-		.then((response) => response.json())
+		.then((response) => {
+			return response.json()
+		})
 		.then((responseJson) => {
 			resolve(responseJson)
 		})

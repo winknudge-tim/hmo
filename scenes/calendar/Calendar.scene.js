@@ -7,15 +7,27 @@ import {
 import {Agenda} from 'react-native-calendars';
 
 import { Container, Header, Button, Icon, Left, Body, Title, Right } from 'native-base';
-//import getTheme from './native-base-theme/components';
-//import material from './native-base-theme/variables/material';
 import { Col, Row, Grid } from 'react-native-easy-grid';
 
 import { Actions } from 'react-native-router-flux';
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
+import { actions } from '../../reducers/calendarReducer'
+
+import moment from 'moment'
+import _ from 'lodash'
 
 import Styles from '../../configs/styles'
 
-export default class AgendaScreen extends Component {
+function mapStateToProps (state) {
+  return state
+}
+
+const mapDispatchToProps = (dispatch) => ({
+  ...bindActionCreators(actions, dispatch)
+})
+
+class AgendaScreen extends Component {
   
   constructor(props) {
     super(props);
@@ -24,13 +36,42 @@ export default class AgendaScreen extends Component {
     };
   }
 
+  componentWillMount () {
+    this.props.getCalendar(this.props.authReducer.userId)
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (this.props.calendarReducer.showSpinner !== nextProps.calendarReducer.showSpinner) {
+      
+    }
+  }
+
   goBack () {
 
     Actions.pop();
 
   }
 
+  get items () {
+    const { events } = this.props.calendarReducer
+    var items = this.state.items || {}
+
+    _.each(events, (event) => {
+      var day = moment(event.Date).format('YYYY-MM-DD')
+      if (!items[day]) {
+        items[day] = []
+      }
+
+      items[day].push({ name: event.Name })
+    })
+
+    return items
+  }
+
   render() {
+    // "Name": "tested",
+    // "Location": "1 35 Burton Road",
+    // "Date": "Sun Apr 07 2019 01:00:00 GMT+01:00"
     return (
       <Container>
         <Header style={Styles.HEADER}>
@@ -46,59 +87,31 @@ export default class AgendaScreen extends Component {
           </Right>
         </Header>
       <Agenda
-        items={this.state.items}
+        items={this.items}
         loadItemsForMonth={this.loadItems.bind(this)}
-        selected={'2017-05-16'}
         renderItem={this.renderItem.bind(this)}
         renderEmptyDate={this.renderEmptyDate.bind(this)}
         rowHasChanged={this.rowHasChanged.bind(this)}
-        // markingType={'period'}
-        // markedDates={{
-        //    '2017-05-08': {textColor: '#666'},
-        //    '2017-05-09': {textColor: '#666'},
-        //    '2017-05-14': {startingDay: true, endingDay: true, color: 'blue'},
-        //    '2017-05-21': {startingDay: true, color: 'blue'},
-        //    '2017-05-22': {endingDay: true, color: 'gray'},
-        //    '2017-05-24': {startingDay: true, color: 'gray'},
-        //    '2017-05-25': {color: 'gray'},
-        //    '2017-05-26': {endingDay: true, color: 'gray'}}}
-         // monthFormat={'yyyy'}
-         // theme={{calendarBackground: 'red', agendaKnobColor: 'green'}}
-        //renderDay={(day, item) => (<Text>{day ? day.day: 'item'}</Text>)}
       />
       </Container>
     );
   }
 
   loadItems(day) {
-    setTimeout(() => {
-      for (let i = -15; i < 85; i++) {
-        const time = day.timestamp + i * 24 * 60 * 60 * 1000;
-        const strTime = this.timeToString(time);
-        if (!this.state.items[strTime]) {
-          this.state.items[strTime] = [];
-          const numItems = Math.floor(Math.random() * 5);
-          for (let j = 0; j < numItems; j++) {
-            this.state.items[strTime].push({
-              name: 'Item for ' + strTime,
-              height: Math.max(50, Math.floor(Math.random() * 150))
-            });
-          }
-        }
-      }
-      //console.log(this.state.items);
-      const newItems = {};
-      Object.keys(this.state.items).forEach(key => {newItems[key] = this.state.items[key];});
+    var { items } = this.state
+    if (!items[day.dateString]) {
+      items = {}
+      items[day.dateString] = []
       this.setState({
-        items: newItems
-      });
-    }, 1000);
-    // console.log(`Load Items for ${day.year}-${day.month}`);
+        items
+      })
+    } 
   }
 
   renderItem(item) {
+    console.log(item)
     return (
-      <View style={[styles.item, {height: item.height}]}><Text>{item.name}</Text></View>
+      <View style={[styles.item, {height: 50}]}><Text>{item.name}</Text></View>
     );
   }
 
@@ -117,6 +130,9 @@ export default class AgendaScreen extends Component {
     return date.toISOString().split('T')[0];
   }
 }
+
+export default connect(mapStateToProps, mapDispatchToProps)(AgendaScreen);
+
 
 const styles = StyleSheet.create({
   item: {

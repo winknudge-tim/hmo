@@ -136,6 +136,16 @@ class ProfileScene extends Component<{}> {
                 <Icon name="arrow-forward" />
               </Right>
             </ListItem>
+            <ListItem button={true} onPress={Actions.cardDetailsScene}>
+              <Left>
+                <Icon name="card" />
+                <Text>Update card details</Text>
+              </Left>
+              <Right>
+                <Icon name="arrow-forward" />
+              </Right>
+            </ListItem>
+            
             <ListItem button={true} onPress={this.doLogout.bind(this)}>
               <Left>
                 <Icon name="exit" />

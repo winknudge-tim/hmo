@@ -9,6 +9,7 @@ import { propertyReducer } from './propertyReducer'
 import { incidentFAQReducer, incidentTreeQuestionsReducer, incidentAnswersReducer, recordedIncidentsReducer, submitIncidentsReducer } from './incidentReducer'
 import { registrationProgressReducer } from './registrationProgressReducer'
 import { locationReducer } from './locationReducder'
+import { calendarReducer } from './calendarReducer'
 
 const initialState = {
     scene: {}
@@ -38,5 +39,6 @@ export const appReducer = combineReducers({
     registrationProgressReducer,
     submitIncidentsReducer,
     submitRegReducer,
-    locationReducer
+    locationReducer,
+    calendarReducer
 });

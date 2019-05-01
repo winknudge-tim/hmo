@@ -25,7 +25,6 @@ var defaultData = {
 
 var clearTempData = function () {
 
-	console.log('TEMP_REG_LABEL: ', TEMP_REG_LABEL)
 	Store.get(TEMP_REG_LABEL).then(
 
 			(data) => {

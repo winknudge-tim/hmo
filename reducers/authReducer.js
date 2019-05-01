@@ -104,14 +104,6 @@ var loginWithEmail = (username, password) => {
       })
       .catch((e) => {
         dispatch({ type: types.LOGIN_FAILED, error: e })
-        // Alert.alert(
-        //   'Login failed',
-        //   'Your details do no match what is in our system',
-        //   [
-        //     {text: 'OK', onPress: () => console.log('OK Pressed')},
-        //   ],
-        //   { cancelable: false }
-        // )
       })
   }
 
