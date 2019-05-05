@@ -31,6 +31,7 @@ import { connect } from 'react-redux'
 
 import { actions as rtActions } from '../reducers/registrationProgressReducer'
 import { actions as locationActions } from '../actions/locationActions'
+import { actions as geoActions } from '../reducers/geoReducer'
 
 import firebase from 'react-native-firebase';
 
@@ -44,7 +45,8 @@ class PropertyScene extends Component<{}> {
   }
 
   componentDidMount() {
-    this.props.getRegistrationProgress(this.props.authReducer.userId)  
+    this.props.getRegistrationProgress(this.props.authReducer.userId)
+    this.props.getState(this.props.authReducer.userId)
     
     firebase.messaging().hasPermission()
       .then(enabled => {
@@ -91,7 +93,7 @@ class PropertyScene extends Component<{}> {
 
   render () {
 
-    var { registrationProgressReducer, locationReducer } = this.props
+    var { registrationProgressReducer, geoReducer, authReducer } = this.props
 
     var registrationProgress = registrationProgressReducer.payload || []
 
@@ -103,6 +105,8 @@ class PropertyScene extends Component<{}> {
 
     var progressPec = ( incomplete.length / registrationProgress.length) * 100
     progressPec = Number(progressPec.toFixed(0))
+
+    console.log(geoReducer.isHome)
 
     return (
        <Container>
@@ -137,10 +141,14 @@ class PropertyScene extends Component<{}> {
                 <Icon name="arrow-forward" />
               </Right>
             </ListItem>}
-            <ListItem button={true} onPress={() => { this.props.setLocation(!locationReducer.userAtHome) }}>
+            <ListItem button={true} onPress={() => { 
+                if (!geoReducer.loading) {
+                  this.props.setState(authReducer.userId, !geoReducer.userAtHome)
+                }
+              }}>
               <Left>
                 <Icon name="navigate" />
-                <Text>Check {locationReducer.userAtHome ? 'out' : 'in'}</Text>
+                <Text>Check {geoReducer.isHome ? 'out' : 'in'}</Text>
               </Left>
             </ListItem>
             <ListItem button={true} onPress={Actions.housematesScene}>
@@ -215,7 +223,8 @@ function mapStateToProps (state) {
 
 const mapDispatchToProps = (dispatch) => ({
   ...bindActionCreators(rtActions, dispatch),
-  ...bindActionCreators(locationActions, dispatch)
+  ...bindActionCreators(locationActions, dispatch),
+  ...bindActionCreators(geoActions, dispatch)
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(PropertyScene);

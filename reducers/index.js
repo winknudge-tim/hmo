@@ -10,6 +10,7 @@ import { incidentFAQReducer, incidentTreeQuestionsReducer, incidentAnswersReduce
 import { registrationProgressReducer } from './registrationProgressReducer'
 import { locationReducer } from './locationReducder'
 import { calendarReducer } from './calendarReducer'
+import { geoReducer } from './geoReducer'
 
 const initialState = {
     scene: {}
@@ -40,5 +41,6 @@ export const appReducer = combineReducers({
     submitIncidentsReducer,
     submitRegReducer,
     locationReducer,
-    calendarReducer
+    calendarReducer,
+    geoReducer
 });
