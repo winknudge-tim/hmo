@@ -11,6 +11,7 @@ import { registrationProgressReducer } from './registrationProgressReducer'
 import { locationReducer } from './locationReducder'
 import { calendarReducer } from './calendarReducer'
 import { geoReducer } from './geoReducer'
+import { bankDetailsReducer } from './bankDetailsReducer'
 
 const initialState = {
     scene: {}
@@ -42,5 +43,6 @@ export const appReducer = combineReducers({
     submitRegReducer,
     locationReducer,
     calendarReducer,
-    geoReducer
+    geoReducer,
+    bankDetailsReducer
 });

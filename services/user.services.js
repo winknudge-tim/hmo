@@ -65,10 +65,17 @@ const getProgress = function () {
     
 }
 
+const updateBankDetails = function (userId, details) {
+	return new Promise ((resolve) => {
+		setTimeout(resolve, 1500)
+	})
+}
+
 export default {
     getHome,
     setHome,
     checkDuplicate,
-    getProgress
+		getProgress,
+		updateBankDetails
 }
 
