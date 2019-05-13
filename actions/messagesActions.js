@@ -84,8 +84,7 @@ const createResponse = function createResponseToTheMessage (msgId, type, message
 
 		messagesService.createResponse(msgId, type, message, userId).then(
 			(messages) => {
-				console.log(messages)
-				dispatch({ type: _actionTypes.CREATED_RESPONE_SUCCESS, messages: messages })
+				dispatch({ type: _actionTypes.CREATED_RESPONE_SUCCESS, payload: messages })
 
 			},
 			(err) => {

@@ -16,6 +16,7 @@ import PropertyScene from './scenes/Property.scene'
 // Messaging
 import ConversationsScene from './scenes/messaging/Conversations.scene'
 import ConversationScene from './scenes/messaging/Conversation.scene'
+import ChatScene from './scenes/messaging/Chat.scene'
 import NewConversationScene from './scenes/messaging/New-conversation.scene'
 
 // Housemates
@@ -83,6 +84,7 @@ const Scenes = Actions.create(
     </Stack>
     <Stack key='main' type={ActionConst.RESET} hideNavBar={true}>
       <Scene key="propertyScene" component={ PropertyScene } Lang={Lang} />
+      <Scene initial key="chatScene" component={ ChatScene } Lang={Lang} />
       <Scene key="conversationsScene" component={ ConversationsScene } Lang={Lang} />
       <Scene key="conversationScene" component={ ConversationScene } Lang={Lang} />
       <Scene key="newConversationScene" component={ NewConversationScene } Lang={Lang} />
@@ -100,11 +102,11 @@ const Scenes = Actions.create(
       <Scene key="incidentFaqAnswer" component={ IncidentFaqAnswer } Lang={Lang} />
       
       <Scene key="incidentScene" component={ IncidentScene } Lang={Lang} />
-      <Scene  key="newIncidentScene" component={ NewIncidentScene } Lang={Lang} />
+      <Scene key="newIncidentScene" component={ NewIncidentScene } Lang={Lang} />
 
       <Scene key="documentListScene" component={ DocumentListScene } Lang={Lang} />
       <Scene key="documentScene" component={ DocumentScene } Lang={Lang} />
-      <Scene  key="signDocumentScene" component={ SignDocumentScene } Lang={Lang} />
+      <Scene key="signDocumentScene" component={ SignDocumentScene } Lang={Lang} />
 
       <Scene key="calendarScene" component={ CalendarScene } Lang={Lang} />
 

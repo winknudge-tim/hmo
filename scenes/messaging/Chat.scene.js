@@ -58,10 +58,10 @@ class ConversationsScene extends Component {
       }
 
       onSend(messages = []) {
-
-        this.setState(previousState => ({
-          messages: GiftedChat.append(previousState.messages, messages)
-        }));
+        this.props.createResponse(this.props.singleMessage.meta.ChaId, 'T', messages[0].text, this.props.authReducer.userId)
+        // this.setState(previousState => ({
+        //   messages: GiftedChat.append(previousState.messages, messages)
+        // }));
       }
 
     componentWillReceiveProps (nextProps) {
@@ -86,6 +86,11 @@ class ConversationsScene extends Component {
         this.setState({
             messages: formattedMsgs
         })
+
+        if (this.props.singleMessage.type !== actionTypes.CREATED_RESPONE_SUCCESS &&
+            nextProps.singleMessage.type === actionTypes.CREATED_RESPONE_SUCCESS) {
+            this.props.selectMessage(this.props.singleMessage.meta)
+        }
     }
 
   render () {
@@ -110,7 +115,7 @@ class ConversationsScene extends Component {
                 messages={this.state.messages}
                 onSend={messages => this.onSend(messages)}
                 user={{
-                _id: this.props.authReducer.propId
+                _id: this.props.authReducer.userId
                 }}
             />
             </View>

@@ -59,23 +59,17 @@ export const singleMessage = (state = initialSingeMessageState, action) => {
 
   switch (action.type) {
     
-
     case actionTypes.SELECTED_MESSAGE:
-
       return { ...state, meta: action.meta, type: action.type }
 
     case actionTypes.SELECTED_MESSAGE_RETRIEVED:
       return { ...state, type: action.type, payload: action.payload }
 
     case actionTypes.CREATING_RESPONSE:
-
       return { ...state, showSpinner: true, error: null, type: action.type }
 
-
     case actionTypes.CREATED_RESPONE_SUCCESS:
-
       return { ...state, showSpinner: false, error: null, type: action.type, messages: action.messages }
-
 
     default:
       return state
