@@ -11,6 +11,7 @@ import {
 } from 'react-native';
 
 import _ from 'lodash'
+import moment from 'moment'
 
 import { Container, Header, Content, Left, Body, Right, Button, Icon, Title, Text, List, ListItem, Badge } from 'native-base';
 //import getTheme from './native-base-theme/components';
@@ -32,22 +33,39 @@ import { connect } from 'react-redux'
 import { actions as rtActions } from '../reducers/registrationProgressReducer'
 import { actions as locationActions } from '../actions/locationActions'
 import { actions as geoActions } from '../reducers/geoReducer'
+import { actions as msgActions } from '../actions/messagesActions'
 
 import firebase from 'react-native-firebase';
+
+import MessagesService from '../services/messages.service'
 
 class PropertyScene extends Component<{}> {
   
   constructor(props) {
-  
     super(props);
 
-
+    this.state = {
+      lastCheckedDateTime: null
+    }
   }
 
   componentDidMount() {
     this.props.getRegistrationProgress(this.props.authReducer.userId)
     this.props.getState(this.props.authReducer.userId)
+    this.props.getMessages(this.props.authReducer.propId, this.props.authReducer.userId)
     
+    MessagesService.getDateOfLastMessageChecked()
+      .then((lastCheckedDateTime) => {
+        console.log(lastCheckedDateTime)
+        this.setState({
+          lastCheckedDateTime
+        })
+      })
+      .catch(() => {
+
+      })
+
+
     firebase.messaging().hasPermission()
       .then(enabled => {
        
@@ -80,19 +98,39 @@ class PropertyScene extends Component<{}> {
   }
 
   goBack () {
-
     Actions.pop();
-
   }
 
-  goForward () {
+  gotToMessages = () => {
 
-    //Actions.guarantorScene();
+    MessagesService.setDateOfLastMessageChecked()
+      .then((lastCheckedDateTime) => {
+        this.setState({
+          lastCheckedDateTime
+        }, () => {
+          Actions.conversationsScene()
+        } )
+      })
+      .catch(() => {
+        Actions.conversationsScene()
+      })
+  }
 
+  get numberOfNewMessages () {
+    const { messages } = this.props.messagesReducer
+    const { lastCheckedDateTime } = this.state
+    var num = 0
+
+    _.each(messages, (message) => {
+      if (moment(lastCheckedDateTime).isBefore(new Date(message.DateUpdated))) {
+        ++num
+      }
+    })
+
+    return num
   }
 
   render () {
-
     var { registrationProgressReducer, geoReducer, authReducer } = this.props
 
     var registrationProgress = registrationProgressReducer.payload || []
@@ -105,8 +143,6 @@ class PropertyScene extends Component<{}> {
 
     var progressPec = ( incomplete.length / registrationProgress.length) * 100
     progressPec = Number(progressPec.toFixed(0))
-
-    console.log(geoReducer.isHome)
 
     return (
        <Container>
@@ -160,16 +196,16 @@ class PropertyScene extends Component<{}> {
                 <Icon name="arrow-forward" />
               </Right>
             </ListItem>
-            <ListItem button={true} onPress={Actions.conversationsScene}>
+            <ListItem button={true} onPress={this.gotToMessages}>
               <Left>
                 <Icon name="chatbubbles" />
                 <Text>Messages</Text>
               </Left>
-              <Right>
+              {this.numberOfNewMessages > 0 && <Right>
                 <Badge>
-                  <Text>1</Text>
+                  <Text>{this.numberOfNewMessages}</Text>
                 </Badge>
-              </Right>
+              </Right>}
               <Right>
                 <Icon name="arrow-forward" />
               </Right>
@@ -224,7 +260,8 @@ function mapStateToProps (state) {
 const mapDispatchToProps = (dispatch) => ({
   ...bindActionCreators(rtActions, dispatch),
   ...bindActionCreators(locationActions, dispatch),
-  ...bindActionCreators(geoActions, dispatch)
+  ...bindActionCreators(geoActions, dispatch),
+  ...bindActionCreators(msgActions, dispatch)
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(PropertyScene);

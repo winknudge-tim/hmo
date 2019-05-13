@@ -140,10 +140,43 @@ const updateMessageRead = function updateMessageReadOnServer (data) {
 
 }
 
+const DATE_OFF_MESSEAGE = 'DATE_OFF_MESSEAGE'
+
+const getDateOfLastMessageChecked = function () {
+	return new Promise((resolve, reject) => {
+		return Store.get(DATE_OFF_MESSEAGE)
+			.then((res) => {
+				if (res === null) {
+					var date = new Date()
+					return Store.save(DATE_OFF_MESSEAGE, date)
+				}
+				return resolve(res)
+			})
+			.then(resolve)
+			.catch(reject)
+	})
+}
+
+const setDateOfLastMessageChecked = function () {
+	return new Promise((resolve, reject) => {
+		var date = new Date()
+		return Store.save(DATE_OFF_MESSEAGE, date)
+		.then(() => {
+			return Store.get(DATE_OFF_MESSEAGE)
+		})
+		.then((res) => {
+			return resolve(res)
+		})
+		.catch(reject)
+	})
+}
+
 export default {
 	getMessages,
 	createMessage,
 	createResponse,
 	updateMessageRead,
-	getChat
+	getChat,
+	getDateOfLastMessageChecked,
+	setDateOfLastMessageChecked
 }
