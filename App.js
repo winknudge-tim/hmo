@@ -84,7 +84,7 @@ const Scenes = Actions.create(
     </Stack>
     <Stack key='main' type={ActionConst.RESET} hideNavBar={true}>
       <Scene key="propertyScene" component={ PropertyScene } Lang={Lang} />
-      <Scene initial key="chatScene" component={ ChatScene } Lang={Lang} />
+      <Scene key="chatScene" component={ ChatScene } Lang={Lang} />
       <Scene key="conversationsScene" component={ ConversationsScene } Lang={Lang} />
       <Scene key="conversationScene" component={ ConversationScene } Lang={Lang} />
       <Scene key="newConversationScene" component={ NewConversationScene } Lang={Lang} />

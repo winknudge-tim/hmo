@@ -51,13 +51,13 @@ class ConversationsScene extends Component {
 
     componentWillMount() {
 
-        this.props.selectMessage({
-            "ChaId": "74",
-            "Title": "Fff",
-            "CreatedBy": "Luke",
-            "DateCreated": "Sun Apr 07 2019 17:49:17 GMT+01:00",
-            "DateUpdated": "Sun Apr 07 2019 17:49:17 GMT+01:00"
-        })
+        // this.props.selectMessage({
+        //     "ChaId": "74",
+        //     "Title": "Fff",
+        //     "CreatedBy": "Luke",
+        //     "DateCreated": "Sun Apr 07 2019 17:49:17 GMT+01:00",
+        //     "DateUpdated": "Sun Apr 07 2019 17:49:17 GMT+01:00"
+        // })
       }
 
       onSend(messages = []) {
@@ -161,6 +161,10 @@ class ConversationsScene extends Component {
         })
     }
 
+    goBack () {
+        Actions.pop();
+      }
+
   render () {
     return (
         <Container>
@@ -171,7 +175,7 @@ class ConversationsScene extends Component {
             </Button>
           </Left>
           <Body>
-            <Title style={Styles.HEADER_TITLE}>{this.props.Lang.conversations.title}</Title>
+            <Title style={Styles.HEADER_TITLE}>{this.props.singleMessage.meta.Title}</Title>
           </Body>
           <Right>
            

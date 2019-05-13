@@ -63,7 +63,7 @@ class ConversationsScene extends Component {
 
     
    this.props.selectMessage(message)
-   Actions.conversationScene();
+   Actions.chatScene();
 
   }
 
