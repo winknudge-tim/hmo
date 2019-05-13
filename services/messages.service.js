@@ -59,7 +59,9 @@ const getChat = function getChatFromServer (iChaId) {
 			},
 			body:sendData
 		})
-		.then((response) => response.json())
+		.then((response) => {
+			return response.json()
+		})
 		.then((responseJson) => {
 			resolve(responseJson.messages)
 		})
