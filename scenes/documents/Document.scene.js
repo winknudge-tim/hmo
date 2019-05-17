@@ -59,6 +59,7 @@ export default class DocumentScene extends Component<{}> {
   }
 
   render () {
+    const { RequiresSignature, HasBeenSigned } = this.props
     const source = {uri: this.props.PDF ,cache:true};
     
     return (
@@ -96,11 +97,11 @@ export default class DocumentScene extends Component<{}> {
                         width:Dimensions.get('window').width }}/>
 
           </View>
-          <View style={{ height: 65 }}>
+          {RequiresSignature === 'Y' && HasBeenSigned === 'N' && <View style={{ height: 65 }}>
             <Button block style={Styles.PRIMARY_BUTTON} onPress={this.goForward}>
               <Text>{this.props.Lang.documentScene.sign}</Text>
             </Button>
-          </View>
+          </View>}
         </View>
       </Container>
     );

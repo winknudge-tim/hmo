@@ -48,7 +48,7 @@ class DocumentListScene extends Component<{}> {
 
 
     if (newProps.entered !== this.props.entered) {
-      this.props.getDocuments()
+      this.props.getDocuments(this.props.authReducer.user.PrpId, this.props.authReducer.user.TcyId)
     }
 
   }

@@ -26,7 +26,8 @@ export default class SignDocumentScene extends Component<{}> {
     super(props);
   
     this.state = {
-      selectedPropertyId: null
+      selectedPropertyId: null,
+      signature: null
     };
   }
 
@@ -35,6 +36,13 @@ export default class SignDocumentScene extends Component<{}> {
     return this.state.selectedPropertyId === propertyId
 
   }
+
+  /**
+   * 
+    "FilId": "82",
+  "DocId": "18",
+  TcyId": "75"
+   */
 
   doSelectProperty (propertyId) {
 
@@ -48,19 +56,35 @@ export default class SignDocumentScene extends Component<{}> {
 
   }
 
-  goForward () {
+  doSign = () => {
+    this.refs["sign"].saveImage()
 
-    Actions.pop("documentListScene");
-
-  }
-
-  clearFilter () {
+    //Actions.pop("documentListScene");
 
   }
 
+  resetSign = () => {
+    this.refs["sign"].resetImage();
+    this.setState({
+      signature: null
+    })
+  }
 
+  _onSaveEvent = (result) => {
+    // result.encoded
+    
+  }
+
+  _onDragEvent = () => {
+    // This callback will be called when the user enters signature
+    this.setState({
+      signature: true
+    })
+  }
 
   render () {
+
+    const { signature } = this.state
 
     return (
        <Container>
@@ -82,14 +106,16 @@ export default class SignDocumentScene extends Component<{}> {
         justifyContent: 'space-between',
       }}>
           <View style={{ flex: 1 }}>
-            <Text style={{ margin: 10 }}>By signing you are agreeing to the terms setout in this document</Text>
+            <Text style={{ margin: 10 }}>By signing, you are agreeing to the terms setout in this document.</Text>
+            <Text style={{ margin: 10 }}>Please sign in the box below.</Text>
           </View>
-          <View style={{ flex: 1 }}>
+          <View style={{ flex: 1, paddingHorizontal: 10 }}>
           <SignatureCapture
                     style={[{flex:1},styles.signature]}
                     ref="sign"
                     onSaveEvent={this._onSaveEvent}
                     onDragEvent={this._onDragEvent}
+                    onSaveEvent={this._onSaveEvent}
                     saveImageFileInExtStorage={false}
                     showNativeButtons={false}
                     showTitleLabel={false}
@@ -98,11 +124,19 @@ export default class SignDocumentScene extends Component<{}> {
           
 
           </View>
-          <View style={{ height: 65 }}>
-            <Button block style={Styles.PRIMARY_BUTTON} onPress={this.goForward}>
-              <Text>{this.props.Lang.signDocument.sign}</Text>
-            </Button>
+          <View style={{ height: 65, paddingHorizontal: 10 }}>
+            {signature && <Button block style={Styles.PRIMARY_BUTTON} onPress={this.doSign}>
+              <Text style={Styles.PRIMARY_BUTTON_TEXT}>{this.props.Lang.signDocument.sign}</Text>
+            </Button>}
           </View>
+          <View style={{ height: 65, paddingHorizontal: 10 }}>
+            {signature && <Button block style={Styles.SECONDARY_BUTTON} onPress={this.resetSign}>
+              <Text style={Styles.SECONDARY_BUTTON_TEXT}>{this.props.Lang.signDocument.clear}</Text>
+            </Button>}
+          </View>
+          <View style={{ flex: 1 }}>
+          </View>
+
         </View>
       </Container>
     );

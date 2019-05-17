@@ -86,7 +86,8 @@ documentScene.sign = "Sign"
 
 // SIGN DOCUMENT
 signDocument.title = "Sign document"
-signDocument.sign = "I agree"
+signDocument.sign = "Sign"
+signDocument.clear = "Clear"
 
 // REGISTER
 register.title = "Register"

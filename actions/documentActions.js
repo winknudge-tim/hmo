@@ -6,19 +6,17 @@ _actionTypes.RETRIEVING_DOCUMENTS = 'RETRIEVING_DOCUMENTS'
 _actionTypes.RETRIEVED_DOCUMENTS = 'RETRIEVED_DOCUMENTS'
 _actionTypes.RETRIEVED_DOCUMENTS_ERROR = 'RETRIEVED_DOCUMENTS_ERROR'
 
-const getDocuments = function getDocumentsListForTheUser () {
+const getDocuments = function getDocumentsListForTheUser (iPrpId, iTcyId) {
 
 	return (dispatch) => {
 		
 		dispatch({ type: _actionTypes.RETRIEVING_DOCUMENTS })
 
-		documentService.getDocuments().then(
+		documentService.getDocuments(iPrpId, iTcyId).then(
 			(documents) => {
-				console.log(documents)
 				dispatch({ type: _actionTypes.RETRIEVED_DOCUMENTS, documents })
 			},
 			(error) => {
-				console.log('error')
 				dispatch({ type: _actionTypes.RETRIEVED_DOCUMENTS_ERROR, error })
 			}
 		)

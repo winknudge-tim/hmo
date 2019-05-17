@@ -29,37 +29,29 @@ const tempDocuments = [
 ]
 
 
-const getDocuments = function getDocumentsFromServer (iPrpId) {
+const getDocuments = function getDocumentsFromServer (iPrpId, iTcyId) {
 
 	return new Promise (function (resolve, reject) {
-		console.log('getDocuments')
 		var data = {
 			iPrpId,
-			iTcyId: 3,
+			iTcyId,
 			iOrgId: 3
 		}
-
-		
 
 		fetch(Config.API_URL + 'documents/listdocuments', {
             method: 'POST',
             headers: {
-              'Content-Type': 'application/x-www-form-urlencoded',
+              'Content-Type': 'application/json',
               'apiKey': Config.API_KEY
 			},
 			body: JSON.stringify(data)
         }).then((response) => response.json())
             .then((responseJson) => {
-				console.log(responseJson)
-                resolve(tempDocuments, responseJson.documents)
-
+                resolve(responseJson.documents)
             })
             .catch(function(error) {
-
-				console.log('error')
 				console.log(error)
 				reject('register error')
-
 			});
 
 	})
