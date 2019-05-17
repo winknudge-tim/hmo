@@ -4,23 +4,35 @@
  * @flow
  */
 
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 import {
-  Platform,
   View,
   StyleSheet,
-  TouchableHighlight
-} from 'react-native';
+  Alert
+} from 'react-native'
 
-import { Container, Header, Content, Form, Item, Input, Radio, Label, Left, Body, Right, Button, Icon, Title, Text, H3, List, ListItem } from 'native-base';
-import { Col, Row, Grid } from 'react-native-easy-grid';
+import { Container, Header, Left, Body, Right, Button, Icon, Title, Text } from 'native-base'
 
-import { Actions } from 'react-native-router-flux';
-import SignatureCapture from 'react-native-signature-capture';
+import { Actions } from 'react-native-router-flux'
+import SignatureCapture from 'react-native-signature-capture'
 
 import Styles from '../../configs/styles'
+import DocService from '../../services/document.service'
 
-export default class SignDocumentScene extends Component<{}> {
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux'
+
+import { actions } from '../../actions/documentActions'
+
+function mapStateToProps (state) {
+  return state
+}
+
+const mapDispatchToProps = (dispatch) => ({
+  ...bindActionCreators(actions, dispatch)
+})
+
+class SignDocumentScene extends Component<{}> {
   
   constructor (props) {
     super(props);
@@ -37,12 +49,7 @@ export default class SignDocumentScene extends Component<{}> {
 
   }
 
-  /**
-   * 
-    "FilId": "82",
-  "DocId": "18",
-  TcyId": "75"
-   */
+ 
 
   doSelectProperty (propertyId) {
 
@@ -70,9 +77,48 @@ export default class SignDocumentScene extends Component<{}> {
     })
   }
 
+  didSave = () => {
+    Alert.alert(
+      'Signed',
+      'Thank the document has been signed!',
+      [
+        {
+          text: 'OK', 
+          onPress: () => {
+            Actions.pop()
+            Actions.pop()
+          }
+        },
+      ],
+      {cancelable: false},
+    );
+  }
+
+  didError = () => {
+    Alert.alert(
+      'Error',
+      'Sorry there was an error while attempting to sign your document',
+      [
+        {text: 'OK' }
+      ],
+      {cancelable: false},
+    );
+  }
+
   _onSaveEvent = (result) => {
+    // iFilId, DocId, iTcyId, sFile
+    const { FilId, DocId } = this.props
+    const { TcyId } = this.props.authReducer.user
+    console.log(FilId, DocId, TcyId)
+    this.didSave()
     // result.encoded
-    
+    // DocService.signDocument(FilId, DocId, 75, `data:image/png;base64,${result.encoded}`)
+    //   .then((dd) => {
+    //     console.log(dd)
+    //   })
+    //   .catch((e) => {
+    //     console.log('err: ', e)
+    //   })
   }
 
   _onDragEvent = () => {
@@ -174,3 +220,5 @@ const styles = StyleSheet.create({
         margin: 10
     }
 });
+
+export default connect(mapStateToProps, mapDispatchToProps)(SignDocumentScene);

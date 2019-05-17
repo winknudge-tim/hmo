@@ -58,6 +58,36 @@ const getDocuments = function getDocumentsFromServer (iPrpId, iTcyId) {
 
 }
 
+const signDocument = function (iFilId, iDocId, iTcyId, sFile) {
+	return new Promise (function (resolve, reject) {
+		var data = {
+			iFilId, 
+			iDocId, 
+			iTcyId, 
+			sFile
+		}
+
+		fetch(Config.API_URL + 'documents/signdocument', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'apiKey': Config.API_KEY
+			},
+			body: JSON.stringify(data)
+        }).then((response) => response.json())
+            .then((responseJson) => {
+				console.log(responseJson)
+                resolve()
+            })
+            .catch(function(error) {
+				console.log(error)
+				reject('register error')
+			});
+
+	})
+}
+
 export default {
-	getDocuments
+	getDocuments,
+	signDocument
 }

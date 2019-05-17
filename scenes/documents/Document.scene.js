@@ -48,9 +48,9 @@ export default class DocumentScene extends Component<{}> {
 
   }
 
-  goForward () {
+  goForward = () => {
 
-    Actions.signDocumentScene();
+    Actions.signDocumentScene(this.props);
 
   }
 
