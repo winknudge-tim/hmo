@@ -62,6 +62,7 @@ class IncidentsScene extends Component<{}> {
         </Header>
         <Content>
           <List>
+            {this.props.incidents.length === 0 && <ListItem><Text>{this.props.Lang.incidents.noIssues}</Text></ListItem>}
             {this.props.incidents.map((incident, index) => {
              return (
               <ListItem key={`incident-${index}`} button={true} onPress={() => { Actions.incidentScene({ incident }) }}>

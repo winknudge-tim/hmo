@@ -232,7 +232,7 @@ class PropertyScene extends Component<{}> {
             <ListItem button={true} onPress={Actions.incidentsScene}>
               <Left>
                 <Icon name="alert" />
-                <Text>Incidents</Text>
+                <Text>Maintenance</Text>
               </Left>
               <Right>
                 <Icon name="arrow-forward" />

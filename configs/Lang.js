@@ -162,10 +162,11 @@ product.title = "Product"
 product.buy = "Buy"
 
 // INCIDENTS
-incidents.title = "Issues"
+incidents.title = "Maintenance"
+incidents.noIssues = "There are currently no logged maintenance issues, tap the plus to log an issue"
 
 // INCIDENTS
-incident.title = "Incident"
+incident.title = "Maintenance"
 
 // NEW INCIDENT
 newIncident.title = "New incident"
@@ -177,7 +178,7 @@ newIncident.media = "Media"
 newIncident.addMedia = "Add media"
 newIncident.create = "Report issue"
 newIncident.cancelMsg = "Are you sure you wish to cancel?"
-newIncident.successMsg = "Thank you, your incident has been sent"
+newIncident.successMsg = "Thank you, your issue has been logged"
 newIncident.completeMsg = "Fanstastic! We glad we could help you solve the issue."
 newIncident.completeBtnText = "All done"
 newIncident.instruction = "As you have been unable to resolve the issue, please fill in the form below with as much information as possible and we will get back to you asap."
