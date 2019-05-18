@@ -71,11 +71,39 @@ const updateBankDetails = function (userId, details) {
 	})
 }
 
+const updateUserNotifcationID = function (iUsrId, sPushNotificationID) {
+	return new Promise (function (resolve, reject) {
+
+		var data = {
+			iUsrId,
+			sPushNotificationID
+		}
+
+		fetch(Config.API_URL + 'user/updatedetails', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'apiKey': Config.API_KEY
+			},
+			body: JSON.stringify(data)
+		})
+		.then((response) => {
+			return response.json()
+		})
+		.then((responseJson) => {
+			resolve(responseJson.Success === "True")
+		})
+		.catch(reject);
+
+	})
+}
+
 export default {
     getHome,
     setHome,
     checkDuplicate,
 		getProgress,
-		updateBankDetails
+		updateBankDetails,
+		updateUserNotifcationID
 }
 

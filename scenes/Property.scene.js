@@ -35,6 +35,8 @@ import { actions as locationActions } from '../actions/locationActions'
 import { actions as geoActions } from '../reducers/geoReducer'
 import { actions as msgActions } from '../actions/messagesActions'
 
+import UserService from '../services/user.services'
+
 import firebase from 'react-native-firebase';
 
 import MessagesService from '../services/messages.service'
@@ -76,6 +78,7 @@ class PropertyScene extends Component<{}> {
             if (fcmToken) {
               // user has a device token
               console.log(fcmToken)
+              UserService.updateUserNotifcationID(this.props.authReducer.userId, fcmToken)
             } else {
               // user doesn't have a device token yet
             } 
