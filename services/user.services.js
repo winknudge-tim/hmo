@@ -65,9 +65,25 @@ const getProgress = function () {
     
 }
 
-const updateBankDetails = function (userId, details) {
-	return new Promise ((resolve) => {
-		setTimeout(resolve, 1500)
+const updateBankDetails = function (iUsrId, details) {
+	return new Promise (function (resolve, reject) {
+
+		var data = {
+			...details,
+			iUsrId
+		}
+
+		fetch(Config.API_URL + 'user/updatecarddetails', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'apiKey': Config.API_KEY
+			},
+			body: JSON.stringify(data)
+		})
+		.then(resolve)
+		.catch(reject)
+
 	})
 }
 
