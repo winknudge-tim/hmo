@@ -77,7 +77,6 @@ class PropertyScene extends Component<{}> {
           .then(fcmToken => {
             if (fcmToken) {
               // user has a device token
-              console.log(fcmToken)
               UserService.updateUserNotifcationID(this.props.authReducer.userId, fcmToken)
             } else {
               // user doesn't have a device token yet
@@ -90,7 +89,15 @@ class PropertyScene extends Component<{}> {
           firebase.messaging().requestPermission()
             .then(() => {
               // User has authorised  
-              console.log('authired')
+              firebase.messaging().getToken()
+                .then(fcmToken => {
+                  if (fcmToken) {
+                    // user has a device token
+                    UserService.updateUserNotifcationID(this.props.authReducer.userId, fcmToken)
+                  } else {
+                    // user doesn't have a device token yet
+                  } 
+                });
             })
             .catch(error => {
               // User has rejected permissions  
