@@ -1,21 +1,27 @@
 
+import Config from '../configs'
+
 var issuesExample = {
     "issues": [
         {
             "label": "Boiler",
-            "path": "boiler"
+            "path": "boiler",
+            "iInaId": 63
         },
         {
             "label": "Appliances",
-            "path": "appliances"
+            "path": "appliances",
+            "iInaId": 63
         },
         {
             "label": "Leak",
-            "path": "leak"
+            "path": "leak",
+            "iInaId": 63
         },
         {
             "label": "Internet",
-            "path": "internet"
+            "path": "internet",
+            "iInaId": 63
         }
     ]
 }
@@ -30,21 +36,31 @@ const getOptions = function (propId) {
 
 }
 
-const getQuestions = function (propId, cat) {
+const getQuestions = function (propId, iInaId) {
 
-    return new Promise((resolve) => {
+    return new Promise((resolve, reject) => {
 
-        var questions = {}
+        var sendData = JSON.stringify({
+            iOrgId: "3",
+	        iPrpId: "1",
+            iInaId
+        })
 
-        if (cat === "boiler") {
-            questions = boiler
-        }
-
-        if (cat === "newIssue") {
-            questions = newIssue
-        }
-
-        resolve(questions)
+        fetch(Config.API_URL + 'incidents/workflows', {
+            method: 'POST',
+            headers: {
+            'Content-Type': 'application/json',
+            'apiKey': Config.API_KEY
+            },
+            body: sendData
+        })
+        .then((response) => {
+            return response.json()
+        })
+        .then((responseJson) => {
+            return resolve(responseJson)
+        })
+        .catch(reject);
 
     })
 

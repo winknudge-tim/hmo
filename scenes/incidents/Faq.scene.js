@@ -116,12 +116,12 @@ class IncidentFaqScene extends Component<{}> {
 
   }
 
-  _loadCat = (cat) => {
+  _loadCat = (iInaId) => {
 
     return () => {
 
       //this.props.getQuestions(0, cat)
-      this.props.getQuestions(0, cat)
+      this.props.getQuestions(0, iInaId)
 
       Actions.incidentFaqAnswer()
 
@@ -139,7 +139,7 @@ class IncidentFaqScene extends Component<{}> {
     _.each(this.state.filteredIssues, (issue, key) => {
 
         _issues.push(
-            <ListItem key={key} button={true} value={this.state.filterText} onPress={this._loadCat(issue.path)}>
+            <ListItem key={key} button={true} value={this.state.filterText} onPress={this._loadCat(issue.iInaId)}>
               <Left>
                 <Text>{issue.label}</Text>
               </Left>

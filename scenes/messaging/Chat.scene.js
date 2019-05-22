@@ -71,9 +71,9 @@ class ConversationsScene extends Component {
         var messageData = nextProps.singleMessage.payload
         var formattedMsgs = []
 
-        _.each(messageData, (msg, index) => {
+        _.each(messageData, (msg) => {
             var formattedMsg = {
-                _id: index,
+                _id: msg.ChmId,
                 text: msg.MessageType === "I" ? "" : msg.Message,
                // image: 'https://placeimg.com/540/340/any',
                 createdAt: new Date(msg.MessageDate),

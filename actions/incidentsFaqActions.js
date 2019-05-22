@@ -32,11 +32,16 @@ var getQuestions = function (propId, cat) {
 
     return (dispatch) => {
 
+        console.log('cat: ', cat)
+
         dispatch({ type: actionTypes.RETRIEVING_INCIDENT_QUESTIONS })
 
         incidentFaqsService.getQuestions(propId, cat)
             .then((questions) => {
                 dispatch({ type: actionTypes.RETRIEVED_INCIDENT_QUESTIONS_SUCCESS, payload: { questions } })
+            })
+            .catch((error) => {
+                dispatch({ type: actionTypes.RETRIEVED_INCIDENT_QUESTIONS_ERROR, error })
             })
 
     }

@@ -3,6 +3,7 @@ import IncidentService from '../services/incidents.service'
 
 export const initialState = {
   payload: {},
+  loading: false,
   error: null
 }
 
@@ -40,19 +41,19 @@ export const incidentTreeQuestionsReducer = (state = initialState, action) => {
     
         case actionTypes.RETRIEVING_INCIDENT_QUESTIONS:
         
-          return { ...state, error: null, type: action.type }
+          return { ...state, error: null, type: action.type, loading: true }
     
         break
     
         case actionTypes.RETRIEVED_INCIDENT_QUESTIONS_SUCCESS:
         
-          return { ...state, error: null, payload: action.payload, type: action.type }
+          return { ...state, error: null, payload: action.payload, type: action.type, loading: false }
     
         break
     
         case actionTypes.RETRIEVED_INCIDENT_QUESTIONS_ERROR:
         
-          return { ...state, error: action.error, type: action.type }
+          return { ...state, error: action.error, type: action.type, loading: false }
     
         break
     
