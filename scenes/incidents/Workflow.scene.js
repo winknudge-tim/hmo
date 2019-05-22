@@ -203,7 +203,7 @@ EAR – end of workflow and automatic report
         </Header>
         <Content style={{ padding: 10 }}>
            {loading &&  <View><Text>loading</Text></View>}
-           {this.state.previous.length > 0 && <Button style={Styles.SECONDARY_BUTTON} onPress={this.goBack}><Text style={Styles.SECONDARY_BUTTON_TEXT}>Back to {this.state.workflowTitles[this.state.workflowTitles.length-1]}</Text></Button>}
+           {this.state.previous.length > 0 && <Button style={Styles.SECONDARY_BUTTON} block onPress={this.goBack}><Text style={Styles.SECONDARY_BUTTON_TEXT}>Back to {this.state.workflowTitles[this.state.workflowTitles.length-1]}</Text></Button>}
            {!loading && !error && this.questions.map(this.displayResponse)}
            {!loading && error && <View><Text>There was an error please go back</Text></View>}
         </Content>
