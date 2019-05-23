@@ -57,6 +57,7 @@ import RegistrationCompleteScene from './scenes/registration/Complete.scene'
 import RegistrationPaymentScene from './scenes/registration/Payment.scene'
 import PreviousAddressesScene from './scenes/registration/PreviousAddresses.scene'
 import IncidentFaqAnswer from './scenes/incidents/FaqAnswer.scene'
+import Worflow from './scenes/incidents/Workflow.scene'
 
 // PROFILE
 import ProfileScene from './scenes/profile/Profile.scene'
@@ -98,7 +99,8 @@ const Scenes = Actions.create(
       <Scene key="housematesScene" component={ HousematesScene } Lang={Lang} />
       
       <Scene  key="incidentsScene" component={ IncidentsScene } Lang={Lang} />
-      <Scene  key="incidentFaqScene" component={ IncidentFaqScene } Lang={Lang} />
+      <Scene key="workflow" component={ Worflow } Lang={Lang} />
+      <Scene key="incidentFaqScene" component={ IncidentFaqScene } Lang={Lang} />
       <Scene key="incidentFaqAnswer" component={ IncidentFaqAnswer } Lang={Lang} />
       
       <Scene key="incidentScene" component={ IncidentScene } Lang={Lang} />

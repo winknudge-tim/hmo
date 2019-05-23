@@ -34,12 +34,12 @@ class IncidentsScene extends Component<{}> {
 
   doGoToNewIncident () {
 
-    Actions.incidentFaqScene();
+    Actions.workflow();
 
   }
 
   componentWillMount () {
-    this.props.getRecordedIncidents(this.props.propId)
+    //this.props.getRecordedIncidents(this.props.propId)
   }
 
   render () {

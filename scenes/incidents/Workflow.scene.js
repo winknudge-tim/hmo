@@ -21,7 +21,8 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 
 import { Actions } from 'react-native-router-flux';
 
-import { actions, actionTypes } from '../../actions/incidentsFaqActions'
+import { actions } from '../../actions/incidentsFaqActions'
+import { actions as IncidentActions } from '../../reducers/incidentReducer'
 
 import Styles from '../../configs/styles'
 
@@ -30,7 +31,8 @@ function mapStateToProps (state) {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  ...bindActionCreators(actions, dispatch)
+  ...bindActionCreators(actions, dispatch),
+  ...bindActionCreators(IncidentActions, dispatch)
 })
 
 class WorkflowScene extends Component<{}> {
@@ -39,9 +41,10 @@ class WorkflowScene extends Component<{}> {
         super(pros)
 
         this.state = {
-            currId: 63,
+            currId: 62,
             workflowTitles: [],
-            previous: []
+            previous: [],
+            reportSent: false
         }
     }
 
@@ -92,18 +95,15 @@ class WorkflowScene extends Component<{}> {
   }
 
   openLink = (link) => {
-
-    return () => {
-
-      Linking.openURL(link).catch(err => console.error('An error occurred', err));
-
-    }
-
+    Linking.openURL(link).catch(err => console.error('An error occurred', err));
   }
 
   autoReport = (res) => {
       // auto report
-    this.selectResponse(res)
+    //this.selectResponse(res)
+    this.setState({
+        reportSent: true
+    })
   }
 
   selectResponse = (res) => {
@@ -187,6 +187,7 @@ EAR – end of workflow and automatic report
 
   render () {
     const { loading, error } = this.props.incidentTreeQuestionsReducer
+    const { reportSent } = this.state
     return (
        <Container>
         <Header transparent style={Styles.HEADER}>
@@ -203,9 +204,19 @@ EAR – end of workflow and automatic report
         </Header>
         <Content style={{ padding: 10 }}>
            {loading &&  <View><Text>loading</Text></View>}
-           {this.state.previous.length > 0 && <Button style={Styles.SECONDARY_BUTTON} block onPress={this.goBack}><Text style={Styles.SECONDARY_BUTTON_TEXT}>Back to {this.state.workflowTitles[this.state.workflowTitles.length-1]}</Text></Button>}
-           {!loading && !error && this.questions.map(this.displayResponse)}
+           {!reportSent && this.state.previous.length > 0 && <Button style={Styles.SECONDARY_BUTTON} block onPress={this.goBack}><Text style={Styles.SECONDARY_BUTTON_TEXT}>Back to {this.state.workflowTitles[this.state.workflowTitles.length-1]}</Text></Button>}
+           {!reportSent && !loading && !error && this.questions.map(this.displayResponse)}
            {!loading && error && <View><Text>There was an error please go back</Text></View>}
+           {reportSent &&  !loading &&
+           <View>
+                <Text>Report has been sent to Ideal House Share</Text>
+                <Button 
+                    transparent style={Styles.PRIMARY_BUTTON} 
+                    block 
+                    onPress={() => { Actions.pop() }}>
+                    <Text style={Styles.PRIMARY_BUTTON_TEXT}>Close</Text>
+                </Button>
+           </View>}
         </Content>
       </Container>
     );
