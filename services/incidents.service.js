@@ -42,11 +42,9 @@ const logIncident = function (incident) {
             body: sendData
         })
         .then((response) => {
-            console.log(response)
             return response.json()
         })
         .then((responseJson) => {
-            console.log(responseJson)
             resolve(responseJson.incidents)
         })
         .catch(reject);
@@ -72,7 +70,6 @@ const getIncidents = function (iPrpId : string): Promise<array> {
 			body: sendData
 		})
 		.then((response) => {
-            console.log(response)
 			return response.json()
 		})
 		.then((responseJson) => {

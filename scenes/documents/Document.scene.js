@@ -85,13 +85,11 @@ export default class DocumentScene extends Component<{}> {
             <Pdf
                       source={source}
                       onLoadComplete={(numberOfPages,filePath)=>{
-                          console.log(`number of pages: ${numberOfPages}`);
                       }}
                       onPageChanged={(page,numberOfPages)=>{
-                          console.log(`current page: ${page}`);
                       }}
                       onError={(error)=>{
-                          console.log(error);
+
                       }}
                       style={{ flex:1,
                         width:Dimensions.get('window').width }}/>
