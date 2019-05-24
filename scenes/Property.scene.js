@@ -58,9 +58,11 @@ class PropertyScene extends Component<{}> {
     
     MessagesService.getDateOfLastMessageChecked()
       .then((lastCheckedDateTime) => {
-        console.log(lastCheckedDateTime)
+
         this.setState({
           lastCheckedDateTime
+        }, () => {
+
         })
       })
       .catch(() => {
@@ -132,7 +134,9 @@ class PropertyScene extends Component<{}> {
     var num = 0
 
     _.each(messages, (message) => {
-      if (moment(lastCheckedDateTime).isBefore(new Date(message.DateUpdated))) {
+
+      if (moment(new Date(lastCheckedDateTime)).isBefore(new Date(message.DateUpdated))) {
+        console.log(new Date(lastCheckedDateTime), new Date(message.DateUpdated))
         ++num
       }
     })
@@ -160,7 +164,7 @@ class PropertyScene extends Component<{}> {
           <Left>
           </Left>
           <Body>
-            <Title style={Styles.HEADER_TITLE}>Ideal House Share</Title>
+            <Title style={Styles.HEADER_TITLE}></Title>
           </Body>
           <Right>
             <Button transparent onPress={Actions.profileScene}>

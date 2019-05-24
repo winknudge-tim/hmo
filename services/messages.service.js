@@ -144,8 +144,10 @@ const DATE_OFF_MESSEAGE = 'DATE_OFF_MESSEAGE'
 
 const getDateOfLastMessageChecked = function () {
 	return new Promise((resolve, reject) => {
+		console.log('getDateOfLastMessageChecked')
 		return Store.get(DATE_OFF_MESSEAGE)
 			.then((res) => {
+				console.log(res)
 				if (res === null) {
 					var date = new Date()
 					return Store.save(DATE_OFF_MESSEAGE, date)
