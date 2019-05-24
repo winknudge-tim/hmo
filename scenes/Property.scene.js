@@ -160,7 +160,7 @@ class PropertyScene extends Component<{}> {
           <Left>
           </Left>
           <Body>
-            <Title style={Styles.HEADER_TITLE}>{this.props.Lang.property.title}</Title>
+            <Title style={Styles.HEADER_TITLE}>Ideal House Share</Title>
           </Body>
           <Right>
             <Button transparent onPress={Actions.profileScene}>
@@ -251,6 +251,24 @@ class PropertyScene extends Component<{}> {
               <Left>
                 <Icon name="document" />
                 <Text>Documents</Text>
+              </Left>
+              <Right>
+                <Icon name="arrow-forward" />
+              </Right>
+            </ListItem>
+            <ListItem button={true} onPress={Actions.socialCircle}>
+              <Left>
+                <Icon name="bookmark" />
+                <Text>Social Circle</Text>
+              </Left>
+              <Right>
+                <Icon name="arrow-forward" />
+              </Right>
+            </ListItem>
+            <ListItem button={true} onPress={Actions.review}>
+              <Left>
+                <Icon name="create" />
+                <Text>Review Ideal Share</Text>
               </Left>
               <Right>
                 <Icon name="arrow-forward" />

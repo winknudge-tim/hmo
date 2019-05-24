@@ -65,6 +65,10 @@ import CardDetailsScene from './scenes/profile/Card-details.scene'
 
 import LoginScene from './scenes/auth/Login.scene'
 
+// Static pages
+import SocialCircleScene from './scenes/static/SocialCircle.scene'
+import ReviewScene from './scenes/static/Review.scene'
+
 //
 const Scenes = Actions.create(
   <Scene key="root" hideNavBar={true}>
@@ -98,7 +102,7 @@ const Scenes = Actions.create(
 
       <Scene key="housematesScene" component={ HousematesScene } Lang={Lang} />
       
-      <Scene initial key="incidentsScene" component={ IncidentsScene } Lang={Lang} />
+      <Scene key="incidentsScene" component={ IncidentsScene } Lang={Lang} />
       <Scene key="workflow" component={ Worflow } Lang={Lang} />
       <Scene key="incidentFaqScene" component={ IncidentFaqScene } Lang={Lang} />
       <Scene key="incidentFaqAnswer" component={ IncidentFaqAnswer } Lang={Lang} />
@@ -113,6 +117,9 @@ const Scenes = Actions.create(
       <Scene key="calendarScene" component={ CalendarScene } Lang={Lang} />
 
       <Scene key="checklistScene" component={ChecklistScene} Lang={Lang} />
+
+      <Scene key="socialCircle" component={SocialCircleScene} Lang={Lang} />
+      <Scene key="review" component={ReviewScene} Lang={Lang} />
     </Stack>
   </Scene>
 )
