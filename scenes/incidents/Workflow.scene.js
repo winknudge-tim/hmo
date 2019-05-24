@@ -50,7 +50,7 @@ class WorkflowScene extends Component<{}> {
 
   componentDidMount () {
 
-    this.props.getQuestions(1, this.state.currId)
+    this.props.getQuestions(this.props.authReducer.propId, this.state.currId)
 
   }
 
@@ -101,6 +101,13 @@ class WorkflowScene extends Component<{}> {
   autoReport = (res) => {
       // auto report
     //this.selectResponse(res)
+    console.log(this.state.workflowTitles.toString())
+    this.props.submitIncident({ 
+      "sTitle": this.title,
+      "sDescription": this.state.workflowTitles.toString(),
+      "iPrpId": this.props.authReducer.propId,
+      "iUsrId": this.props.authReducer.userId
+    })
     this.setState({
         reportSent: true
     })
@@ -118,7 +125,7 @@ class WorkflowScene extends Component<{}> {
             workflowTitles,
             currId: res.responseForwardingID
         }, () => {
-            this.props.getQuestions(1, this.state.currId)  
+            this.props.getQuestions(this.props.authReducer.propId, this.state.currId)  
         })
     }
   }
@@ -160,11 +167,11 @@ EAR – end of workflow and automatic report
         
         case 'EAR':
         return (<Button 
-            transparent style={Styles.SECONDARY_BUTTON} 
+            transparent style={Styles.PRIMARY_BUTTON} 
             key={`wflow-${index}`} 
             block 
             onPress={() => { this.autoReport(res) }}>
-            <Text style={Styles.SECONDARY_BUTTON_TEXT}>{res.response}</Text>
+            <Text style={Styles.PRIMARY_BUTTON_TEXT}>{res.response}</Text>
         </Button>)
 
         case 'FQU':

@@ -98,6 +98,20 @@ actions.submitIncident = function (incident) {
     IncidentService.logIncident(incident)
       .then(() => {
         dispatch({ type: incidentActionTypes.INCIDENT_SUBMITTED_SUCCESS })
+        
+        dispatch({ type: incidentActionTypes.RECORDED_INCIDENNTS_RETRIEVING })
+
+        IncidentService.getIncidents(incident.iPrpId)
+          .then((payload) => {
+            dispatch({ type: incidentActionTypes.RECORDED_INCIDENNTS_RETRIEVED_SUCCESS, payload })
+          })
+          .catch((e) => {
+            console.log('ERROR!!!')
+            console.log(e)
+            dispatch({ type: incidentActionTypes.RECORDED_INCIDENNTS_RETRIEVED_FAILED })
+          })
+
+
       })
       .catch(() => {
         dispatch({ type: incidentActionTypes.INCIDENT_SUBMITTED_FAILURE })
