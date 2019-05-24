@@ -58,6 +58,7 @@ class AgendaScreen extends Component {
 
     _.each(events, (event) => {
       var day = moment(event.Date).format('YYYY-MM-DD')
+      console.log('checking day ', day)
       if (!items[day]) {
         items[day] = []
       }
@@ -99,8 +100,12 @@ class AgendaScreen extends Component {
 
   loadItems(day) {
     var { items } = this.state
-    if (!items[day.dateString]) {
+
+    if (!items) {
       items = {}
+    }
+
+    if (!items[day.dateString]) {
       items[day.dateString] = []
       this.setState({
         items
@@ -117,7 +122,7 @@ class AgendaScreen extends Component {
 
   renderEmptyDate() {
     return (
-      <View style={styles.emptyDate}><Text>This is empty date!</Text></View>
+      <View style={styles.emptyDate}><Text></Text></View>
     );
   }
 
