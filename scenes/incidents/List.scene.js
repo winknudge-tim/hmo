@@ -39,7 +39,7 @@ class IncidentsScene extends Component<{}> {
   }
 
   componentWillMount () {
-    //this.props.getRecordedIncidents(this.props.propId)
+    this.props.getRecordedIncidents(this.props.propId)
   }
 
   render () {
@@ -67,7 +67,7 @@ class IncidentsScene extends Component<{}> {
              return (
               <ListItem key={`incident-${index}`} button={true} onPress={() => { Actions.incidentScene({ incident }) }}>
                 <Left>
-                  <Text>{incident.sTitle}  <Text style={{ fontSize: 10 }}>{"\n"}{incident.sLocation}  {moment(incident.dCreated).format('h:mma DD/MM/YYYY')}</Text></Text>
+                  <Text>{incident.sTitle}  <Text style={{ fontSize: 10 }}>{"\n"}{incident.sStatus}  {moment(incident.dCreated).format('h:mma DD/MM/YYYY')}</Text></Text>
                 </Left>
                 <Right>
                   <Icon name="chevron-right" />

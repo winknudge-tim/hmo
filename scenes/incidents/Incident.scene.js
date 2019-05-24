@@ -9,6 +9,8 @@ import {
   Platform
 } from 'react-native';
 
+import moment from 'moment'
+
 import { Container, Header, Content, Left, Body, Right, Button, Title, Text, List, ListItem } from 'native-base';
 
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -19,6 +21,10 @@ import Styles from '../../configs/styles'
 
 export default class IncidentScene extends Component<{}> {
   
+  static defaultProps = {
+    incident: {}
+  }
+
   goBack () {
 
     Actions.pop();
@@ -33,7 +39,7 @@ export default class IncidentScene extends Component<{}> {
 
   render () {
     var { incident } = this.props
-    console.log(incident)
+    
     return (
        <Container>
         <Header transparent style={Styles.HEADER}>
@@ -57,42 +63,34 @@ export default class IncidentScene extends Component<{}> {
             </ListItem>
             <ListItem>
               <Left>
-                <Text>Location:</Text>
-              </Left>
-              <Right>
-                <Text>{incident.sLocation}</Text>
-              </Right>
-            </ListItem>
-            <ListItem>
-              <Left>
                 <Text>Status:</Text>
               </Left>
               <Right>
                 <Text>{incident.sStatus}</Text>
               </Right>
             </ListItem>
-            {incident.sStatus !== incident.dCompletedDate && <ListItem>
+            {incident.dCreated !== incident.dCompletedDate && <ListItem>
               <Left>
                 <Text>Completed:</Text>
               </Left>
               <Right>
-                <Text>{incident.dCompletedDate}</Text>
+                <Text>{moment(incident.dCompletedDate).format('h:mma DD/MM/YYYY')}</Text>
               </Right>
             </ListItem>}
-            <ListItem>
+            {incident.dCreated !== incident.dExpectedDate && <ListItem>
               <Left>
                 <Text>Expected Date:</Text>
               </Left>
               <Right>
-                <Text style={{ fontSize: 11 }}>{incident.dExpectedDate}</Text>
+                <Text style={{ fontSize: 11 }}>{moment(incident.dExpectedDate).format('h:mma DD/MM/YYYY')}</Text>
               </Right>
-            </ListItem>
+            </ListItem>}
             <ListItem>
               <Left>
                 <Text>Create date:</Text>
               </Left>
               <Right>
-                <Text style={{ fontSize: 11 }}>{incident.dCreated}</Text>
+                <Text style={{ fontSize: 11 }}>{moment(incident.dCreated).format('h:mma DD/MM/YYYY')}</Text>
               </Right>
             </ListItem>
             <ListItem>
@@ -100,7 +98,7 @@ export default class IncidentScene extends Component<{}> {
                 <Text>Report by:</Text>
               </Left>
               <Right>
-                <Text>{incident.createdBy.sName}</Text>
+                <Text>{incident.sName}</Text>
               </Right>
             </ListItem>
           </List>
