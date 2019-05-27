@@ -7,7 +7,8 @@
 import React, { Component } from 'react';
 import {
   Image,
-  Dimensions
+  Dimensions,
+  Linking
 } from 'react-native';
 
 import _ from 'lodash'
@@ -224,15 +225,6 @@ class PropertyScene extends Component<{}> {
                 <Icon name="arrow-forward" />
               </Right>
             </ListItem>
-            <ListItem button={true} onPress={Actions.productsScene}>
-              <Left>
-                <Icon name="cart" />
-                <Text>Products</Text>
-              </Left>
-              <Right>
-                <Icon name="arrow-forward" />
-              </Right>
-            </ListItem>
             <ListItem button={true} onPress={Actions.incidentsScene}>
               <Left>
                 <Icon name="alert" />
@@ -251,6 +243,15 @@ class PropertyScene extends Component<{}> {
                 <Icon name="arrow-forward" />
               </Right>
             </ListItem>
+            <ListItem button={true} onPress={Actions.productsScene}>
+              <Left>
+                <Icon name="star" />
+                <Text>Rewards</Text>
+              </Left>
+              <Right>
+                <Icon name="arrow-forward" />
+              </Right>
+            </ListItem>
             <ListItem button={true} onPress={Actions.documentListScene}>
               <Left>
                 <Icon name="document" />
@@ -260,7 +261,9 @@ class PropertyScene extends Component<{}> {
                 <Icon name="arrow-forward" />
               </Right>
             </ListItem>
-            <ListItem button={true} onPress={Actions.socialCircle}>
+            <ListItem button={true} onPress={() => {
+              Linking.openURL('https://www.social-circle.co.uk/calendar')
+            }}>
               <Left>
                 <Icon name="bookmark" />
                 <Text>Social Circle</Text>
@@ -269,10 +272,10 @@ class PropertyScene extends Component<{}> {
                 <Icon name="arrow-forward" />
               </Right>
             </ListItem>
-            <ListItem button={true} onPress={Actions.review}>
+            <ListItem button={true} onPress={Actions.endTenancy}>
               <Left>
                 <Icon name="create" />
-                <Text>Review Ideal Share</Text>
+                <Text>End Tenancy</Text>
               </Left>
               <Right>
                 <Icon name="arrow-forward" />

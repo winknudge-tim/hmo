@@ -78,6 +78,12 @@ STYLES.DESCRIPTION_TEXT = {
 	margin: 10
 }
 
+STYLES.H1 = {
+	fontWeight: 'bold',
+	fontSize: 20,
+	marginBottom: 10
+}
+
 STYLES.LABEL = {
 	fontWeight: 'bold',
 	fontSize: 20

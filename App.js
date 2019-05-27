@@ -68,6 +68,8 @@ import LoginScene from './scenes/auth/Login.scene'
 // Static pages
 import SocialCircleScene from './scenes/static/SocialCircle.scene'
 import ReviewScene from './scenes/static/Review.scene'
+import RewardsScene from './scenes/static/Rewards.scene'
+import EndTenancy from './scenes/static/EndTenancy.scene'
 
 //
 const Scenes = Actions.create(
@@ -120,6 +122,9 @@ const Scenes = Actions.create(
 
       <Scene key="socialCircle" component={SocialCircleScene} Lang={Lang} />
       <Scene key="review" component={ReviewScene} Lang={Lang} />
+      <Scene key="rewards" component={RewardsScene} Lang={Lang} />
+      <Scene key="endTenancy" component={EndTenancy} Lang={Lang} />
+      
     </Stack>
   </Scene>
 )
