@@ -11,7 +11,7 @@ import {
 
 import moment from 'moment'
 
-import { Container, Header, Content, Left, Body, Right, Button, Title, Text, List, ListItem } from 'native-base';
+import { Container, Header, Content, Left, Body, Right, Button, Title, Text, List, ListItem, Spinner } from 'native-base';
 
 import { Actions } from 'react-native-router-flux';
 
@@ -61,7 +61,8 @@ class IncidentsScene extends Component<{}> {
           </Right>
         </Header>
         <Content>
-          <List>
+          {this.props.loading && <Spinner />}
+          {!this.props.loading && <List>
             {this.props.incidents.length === 0 && <ListItem><Text>{this.props.Lang.incidents.noIssues}</Text></ListItem>}
             {this.props.incidents.map((incident, index) => {
              return (
@@ -74,7 +75,7 @@ class IncidentsScene extends Component<{}> {
                 </Right>
               </ListItem>
               )})}
-          </List>
+          </List>}
         </Content>
       </Container>
     );
@@ -83,6 +84,7 @@ class IncidentsScene extends Component<{}> {
 
 function mapStateToProps (state) {
   return {
+    loading: state.recordedIncidentsReducer.loading,
     incidents: state.recordedIncidentsReducer.payload,
     propId: state.authReducer.propId
   }

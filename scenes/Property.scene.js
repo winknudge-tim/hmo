@@ -192,7 +192,7 @@ class PropertyScene extends Component<{}> {
                 <Icon name="arrow-forward" />
               </Right>
             </ListItem>}
-            <ListItem button={true} onPress={() => { 
+            {/*<ListItem button={true} onPress={() => { 
                 if (!geoReducer.loading) {
                   this.props.setState(authReducer.userId, !geoReducer.userAtHome)
                 }
@@ -201,7 +201,7 @@ class PropertyScene extends Component<{}> {
                 <Icon name="navigate" />
                 <Text>Check {geoReducer.isHome ? 'out' : 'in'}</Text>
               </Left>
-            </ListItem>
+            </ListItem>*/}
             <ListItem button={true} onPress={Actions.housematesScene}>
               <Left>
                 <Icon name="people" />
@@ -243,7 +243,7 @@ class PropertyScene extends Component<{}> {
                 <Icon name="arrow-forward" />
               </Right>
             </ListItem>
-            <ListItem button={true} onPress={Actions.productsScene}>
+            <ListItem button={true} onPress={Actions.rewards}>
               <Left>
                 <Icon name="star" />
                 <Text>Rewards</Text>

@@ -28,7 +28,7 @@ const ConnectedRouter = connect()(Router);
 
 const enhancer = compose(
   applyMiddleware(thunk),
-  //window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 );
 
 //const composeEnhancers = composeWithDevTools({ realtime: true, port: 8000 });

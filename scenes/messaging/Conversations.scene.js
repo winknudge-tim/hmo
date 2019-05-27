@@ -9,7 +9,7 @@ import {
   Platform
 } from 'react-native'
 
-import { Container, Header, Content, Form, Item, Input, Label, Left, Body, Right, Button, Icon, Title, Text, List, ListItem } from 'native-base'
+import { Container, Header, Content, Form, Item, Input, Label, Left, Body, Right, Button, Icon, Title, Text, List, ListItem, Spinner } from 'native-base'
 //import getTheme from './native-base-theme/components';
 //import material from './native-base-theme/variables/material';
 import { Col, Row, Grid } from 'react-native-easy-grid'
@@ -111,6 +111,7 @@ class ConversationsScene extends Component {
           </Right>
         </Header>
         <Content>
+          {this.props.messagesReducer.showSpinner && <Spinner />}
           <List>
             {this.renderConversations()}
           </List>

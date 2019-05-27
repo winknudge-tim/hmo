@@ -127,7 +127,7 @@ class ProfileScene extends Component<{}> {
         </Header>
         <Content>          
          <List>
-          <ListItem button={true} onPress={this.copyNotifcationId.bind(this)}>
+            {/*<ListItem button={true} onPress={this.copyNotifcationId.bind(this)}>
               <Left>
                 <Icon name="exit" />
                 <Text>Copy notifcations id</Text>
@@ -135,7 +135,7 @@ class ProfileScene extends Component<{}> {
               <Right>
                 <Icon name="arrow-forward" />
               </Right>
-            </ListItem>
+            </ListItem>*/}
             <ListItem button={true} onPress={Actions.cardDetailsScene}>
               <Left>
                 <Icon name="card" />
