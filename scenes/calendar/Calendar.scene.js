@@ -6,7 +6,7 @@ import {
 } from 'react-native';
 import {Agenda} from 'react-native-calendars';
 
-import { Container, Header, Button, Icon, Left, Body, Title, Right } from 'native-base';
+import { Container, Header, Button, Icon, Left, Body, Title, Right, Spinner } from 'native-base';
 import { Col, Row, Grid } from 'react-native-easy-grid';
 
 import { Actions } from 'react-native-router-flux';
@@ -87,13 +87,14 @@ class AgendaScreen extends Component {
           <Right>
           </Right>
         </Header>
-      <Agenda
+        {this.props.calendarReducer.showSpinner && <Spinner />}
+      {!this.props.calendarReducer.showSpinner && <Agenda
         items={this.items}
         loadItemsForMonth={this.loadItems.bind(this)}
         renderItem={this.renderItem.bind(this)}
         renderEmptyDate={this.renderEmptyDate.bind(this)}
         rowHasChanged={this.rowHasChanged.bind(this)}
-      />
+      />}
       </Container>
     );
   }
