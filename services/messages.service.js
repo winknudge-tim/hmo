@@ -70,7 +70,7 @@ const getChat = function getChatFromServer (iChaId) {
 
 }
 
-const createMessage = function createMessageOnServer (iPrpId, iUsrId, sTitle) {
+const createMessage = function createMessageOnServer (iPrpId, iUsrId, sTitle, iIncId = null) {
 
 	return new Promise (function (resolve, reject) {
 
@@ -78,7 +78,8 @@ const createMessage = function createMessageOnServer (iPrpId, iUsrId, sTitle) {
 			sTitle,
 			iPrpId,
 			iUsrId,
-			sUsers: iUsrId
+			sUsers: iUsrId,
+			iIncId
 		}
 
 		var sendData = JSON.stringify(data)

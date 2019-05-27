@@ -1,6 +1,7 @@
 import Store from 'react-native-simple-store'
 import _ from 'lodash'
 import Config from '../configs'
+import MessagesService from './messages.service'
 
 var dataStub = [ {
     "iIncId": "1",
@@ -28,7 +29,7 @@ var dataStub = [ {
      "iUsrId": "9"
 }
  */
-const logIncident = function (incident) {
+const logIncident = function (incident, createChat) {
     return new Promise((resolve, reject) => {
 
         var sendData = JSON.stringify(incident)
@@ -45,7 +46,15 @@ const logIncident = function (incident) {
             return response.json()
         })
         .then((responseJson) => {
-            resolve(responseJson.incidents)
+
+            if (createChat) {
+                return MessagesService.createMessage(incident.iPrpId, incident.iUsrId, incident.sTitle, responseJson.iIncId)
+            }
+
+            return resolve()
+        })
+        .then(() => {
+            return resolve()
         })
         .catch(reject);
     })
@@ -78,6 +87,10 @@ const getIncidents = function (iPrpId : string): Promise<array> {
 		})
 		.catch(reject);
     })
+}
+
+const makePayment = function () {
+    // https://api.idealhouseshare.com/CMS/PaymentLink.aspx?UsrId=xx&InaId=xx&Amount=xx
 }
 
 

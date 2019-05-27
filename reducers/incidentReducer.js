@@ -90,12 +90,12 @@ incidentActionTypes.INCIDENT_SUBMITTED_SUCCESS = 'INCIDENT_SUBMITTED_SUCCESS'
 incidentActionTypes.INCIDENT_SUBMITTED_FAILURE = 'INCIDENT_SUBMITTED_FAILURE'
 incidentActionTypes.INCIDENT_SUBMITTED_CLEAR = 'INCIDENT_SUBMITTED_CLEAR'
 
-actions.submitIncident = function (incident) {
+actions.submitIncident = function (incident, createChat) {
   return (dispatch) => {
     dispatch({ type: incidentActionTypes.INCIDENT_SUBMITTING })
 
   
-    IncidentService.logIncident(incident)
+    IncidentService.logIncident(incident, createChat)
       .then(() => {
         dispatch({ type: incidentActionTypes.INCIDENT_SUBMITTED_SUCCESS })
         

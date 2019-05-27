@@ -41,16 +41,19 @@ class WorkflowScene extends Component<{}> {
         super(pros)
 
         this.state = {
-            currId: 62,
+            currId: 390, // 62,
             workflowTitles: [],
             previous: [],
-            reportSent: false
+            reportSent: false,
+            paid: false,
+            createChat: false
         }
     }
 
   componentDidMount () {
 
     this.props.getQuestions(this.props.authReducer.propId, this.state.currId)
+    
 
   }
 
@@ -98,18 +101,31 @@ class WorkflowScene extends Component<{}> {
     Linking.openURL(link).catch(err => console.error('An error occurred', err));
   }
 
-  autoReport = (res) => {
+  autoReport = (res, createChat) => {
       // auto report
     //this.selectResponse(res)
-    console.log(this.state.workflowTitles.toString())
     this.props.submitIncident({ 
       "sTitle": this.title,
       "sDescription": this.state.workflowTitles.toString(),
       "iPrpId": this.props.authReducer.propId,
       "iUsrId": this.props.authReducer.userId
-    })
+    }, createChat)
     this.setState({
-        reportSent: true
+        reportSent: true,
+        createChat
+    })
+  }
+
+  makePayment = (res) => {
+    this.props.submitIncident({ 
+      "sTitle": this.title,
+      "sDescription": this.state.workflowTitles.toString(),
+      "iPrpId": this.props.authReducer.propId,
+      "iUsrId": this.props.authReducer.userId
+    }, false, true)
+    this.setState({
+        reportSent: true,
+        paid: true
     })
   }
 
@@ -136,6 +152,16 @@ EAR – end of workflow and automatic report
   displayResponse = (res, index) => {
 
     switch (res.responseType) {
+
+        case 'EAP':
+        return (<Button 
+            transparent style={Styles.PRIMARY_BUTTON} 
+            key={`wflow-${index}`} 
+            block 
+            onPress={this.makePayment}>
+            <Text style={Styles.PRIMARY_BUTTON_TEXT}>Make payment of £{res.response}</Text>
+        </Button>)
+        break
 
         case 'END':
         return (<Button 
@@ -164,13 +190,14 @@ EAR – end of workflow and automatic report
                     <Text style={Styles.SECONDARY_BUTTON_TEXT}>Go to next task</Text>
                 </Button>)
 
-        
+
+        case 'EAS':        
         case 'EAR':
         return (<Button 
             transparent style={Styles.PRIMARY_BUTTON} 
             key={`wflow-${index}`} 
             block 
-            onPress={() => { this.autoReport(res) }}>
+            onPress={() => { this.autoReport(res, res.responseType === 'EAS') }}>
             <Text style={Styles.PRIMARY_BUTTON_TEXT}>{res.response}</Text>
         </Button>)
 
@@ -194,7 +221,7 @@ EAR – end of workflow and automatic report
 
   render () {
     const { loading, error } = this.props.incidentTreeQuestionsReducer
-    const { reportSent } = this.state
+    const { reportSent, paid, createChat } = this.state
     return (
        <Container>
         <Header transparent style={Styles.HEADER}>
@@ -216,7 +243,9 @@ EAR – end of workflow and automatic report
            {!loading && error && <View><Text>There was an error please go back</Text></View>}
            {reportSent &&  !loading &&
            <View>
-                <Text>Report has been sent to Ideal House Share</Text>
+                {!paid && <Text style={{ marginBottom: 15 }}>Report has been sent to Ideal House Share</Text>}
+                {paid && <Text style={{ marginBottom: 15 }}>Thank you, your payment had been sent</Text>}
+                {createChat && <Text style={{ marginBottom: 15 }}>A new group has been created within messages. If you have any further quieries about this then you can get touch.</Text>}
                 <Button 
                     transparent style={Styles.PRIMARY_BUTTON} 
                     block 
