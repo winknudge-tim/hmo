@@ -1,4 +1,4 @@
-`cd android && ./gradlew assembleRelease`
+cd android && ./gradlew assembleRelease
 
 /auth/forgotpassword
 

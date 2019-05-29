@@ -18,6 +18,7 @@
     "react": "16.6.0-alpha.8af6728",
     "react-native": "0.57.4",
     "react-native-actionsheet": "^2.4.2",
+    "react-native-add-calendar-event": "^2.3.0",
     "react-native-calendars": "^1.21.0",
     "react-native-credit-card-input": "^0.4.1",
     "react-native-datepicker": "^1.7.2",

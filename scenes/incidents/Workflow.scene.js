@@ -41,7 +41,7 @@ class WorkflowScene extends Component<{}> {
         super(pros)
 
         this.state = {
-            currId: 390, // 62,
+            currId: 62,
             workflowTitles: [],
             previous: [],
             reportSent: false,

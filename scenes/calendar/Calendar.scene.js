@@ -19,6 +19,8 @@ import _ from 'lodash'
 
 import Styles from '../../configs/styles'
 
+import * as AddCalendarEvent from 'react-native-add-calendar-event'
+
 function mapStateToProps (state) {
   return state
 }
@@ -63,10 +65,32 @@ class AgendaScreen extends Component {
         items[day] = []
       }
 
-      items[day].push({ name: event.Name })
+      items[day].push({ name: event.Name, day })
     })
 
     return items
+  }
+
+  addToCalendar = (item) => {
+    const eventConfig = {
+      title: item.name,
+      startDate: moment(item.day, 'YYYY-MM-DD').format('YYYY-MM-DDTHH:mm:ss.SSSZ'),
+      endDat: moment(item.day, 'YYYY-MM-DD').add(1, 'hour').format('YYYY-MM-DDTHH:mm:ss.SSSZ')
+      // and other options
+    }
+
+    AddCalendarEvent.presentEventCreatingDialog(eventConfig)
+      .then((eventInfo) => {
+        // handle success - receives an object with `calendarItemIdentifier` and `eventIdentifier` keys, both of type string.
+        // These are two different identifiers on iOS.
+        // On Android, where they are both equal and represent the event id, also strings.
+        // when { action: 'CANCELED' } is returned, the dialog was dismissed
+        console.log('done');
+      })
+      .catch((error: string) => {
+        // handle error such as when user rejected permissions
+        console.log(error);
+      })
   }
 
   render() {
@@ -115,9 +139,13 @@ class AgendaScreen extends Component {
   }
 
   renderItem(item) {
-    console.log(item)
     return (
-      <View style={[styles.item, {height: 50}]}><Text>{item.name}</Text></View>
+      <View style={[styles.item]}>
+        <Text>{item.name}</Text>
+        <Button onPress={() => { this.addToCalendar(item) }} style={{ ...Styles.PRIMARY_BUTTON }}>
+          <Text styles={{ ...Styles.PRIMARY_BUTTON_TEXT }}>Add to calendar</Text>
+        </Button>
+      </View>
     );
   }
 

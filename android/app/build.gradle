@@ -101,7 +101,7 @@ android {
         applicationId "com.hmo"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 5
+        versionCode 10
         versionName "1.0"
         ndk {
             abiFilters "armeabi-v7a", "x86"
@@ -150,6 +150,7 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-add-calendar-event')
    // compile project(':react-native-firebase')
     compile project(':react-native-image-crop-picker')
     compile project(':react-native-vector-icons')
