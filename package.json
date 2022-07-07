@@ -12,7 +12,7 @@
     "awesome-phonenumber": "^2.2.6",
     "currency-formatter": "^1.5.3",
     "lodash": "^4.17.11",
-    "moment": "^2.22.2",
+    "moment": "^2.29.4",
     "native-base": "^2.8.1",
     "prop-types": "^15.6.2",
     "react": "16.6.0-alpha.8af6728",
